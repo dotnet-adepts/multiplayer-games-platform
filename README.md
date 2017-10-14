@@ -20,6 +20,12 @@ available soon
 
 available soon
 
+## Asciinema example
+
+It's only a random demo of top-notch markdown embedding feature
+
+[![asciicast](https://asciinema.org/a/3466.png)](https://asciinema.org/a/3466)
+
 ## More detailed description
 
 available soon (at reasonable development stage)
