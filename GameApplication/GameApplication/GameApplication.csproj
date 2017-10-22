@@ -12,4 +12,11 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
 
+  <!-- Allows for live-reloading the app -->
+  <!-- Start the app like this: -->
+  <!-- ASPNETCORE_ENVIRONMENT=Development dotnet watch run -->
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
+  </ItemGroup> 
+
 </Project>
