@@ -12,23 +12,13 @@ namespace GameApplication.Data
         {
             context.Database.EnsureCreated();
 
-            if (context.Users.Any())
+            User user = new User { Username = "user1", Password = "pass1" };
+            Game game = new Game { StartDate = DateTime.Now, FinishDate = DateTime.Now.AddDays(2), Type = GameType.SNAKE };
+            user.Games = new List<UserGame>
             {
-                return;   // DB has been seeded
-            }
-
-            var users = new User[]
-                {
-                    new User{Username="user1",Password="pass1"},
-                    new User{Username="user2",Password="pass2"},
-                    new User{Username="user3",Password="pass3",},
-                    new User{Username="maciej",Password="rutkowski"}
-                };
-
-            foreach (User user in users)
-            {
-                context.Users.Add(user);
-            }
+                new UserGame { User = user, Game = game }
+            };
+            context.Users.Add(user);
             context.SaveChanges();
         }
     }

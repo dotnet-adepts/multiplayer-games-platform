@@ -17,7 +17,7 @@ namespace GameApplication
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
-
+   
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -29,7 +29,7 @@ namespace GameApplication
                     logger.LogDebug("Context initialized");
                 }
                 catch (Exception ex)
-                {                
+                {           
                     logger.LogError(ex, "An error occurred while seeding the database.");
                 }
             }        

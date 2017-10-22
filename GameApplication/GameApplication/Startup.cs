@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GameApplication.Data;
+using GameApplication.Repositories;
+using GameApplication.Repositories.Interfaces;
+using GameApplication.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +28,12 @@ namespace GameApplication
         {
             services.AddDbContext<GameContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IGameRepository, GameRepository>();
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IGameService, GameService>();
 
             services.AddMvc();
         }

@@ -5,14 +5,12 @@ using System.Threading.Tasks;
 
 namespace GameApplication.Models
 {
-    public class User
+    public class UserGame
     {
         public long UserId { get; set; }
+        public User User { get; set; }
 
-        public string Username { get; set; }
-
-        public string Password { get; set; }
-
-        public List<UserGame> Games { get; set; }
+        public long GameId { get; set; }
+        public Game Game { get; set; }
     }
 }
