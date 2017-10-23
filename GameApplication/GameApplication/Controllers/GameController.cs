@@ -38,7 +38,7 @@ namespace GameApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser([FromBody] Game game)
+        public IActionResult CreateGame([FromBody] Game game)
         {
             if (game == null)
             {
