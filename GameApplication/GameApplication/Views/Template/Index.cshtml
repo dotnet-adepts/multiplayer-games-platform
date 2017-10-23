@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="mdl-grid demo-content">
+    @Html.Partial("CircleSection")
+    <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+        @Html.Partial("DiagramSection")
+        </div>
+        <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+            @Html.Partial("UpdatesSection")
+            <div class="demo-separator mdl-cell--1-col"></div>
+            @Html.Partial("FormSection")
+        </div>
+    </div>
+<a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/dashboard/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">View Source</a>
