@@ -1,0 +1,45 @@
+﻿@model IEnumerable<GameApplication.Models.GameDescription>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Opis</th>
+            <th>Minimalna liczna graczy</th>
+            <th>Maksymalna liczna graczy</th>
+            <th>Kategoria</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Desription</td>
+                <td>@item.MinNumberOfPlayers</td>
+                <td>@item.MaxNumberOfPlayers</td>
+                <td>@item.Category</td>
+                <td>
+                    @Html.ActionLink("Zagraj", @item.Name + "/lobby") 
+                    @Html.ActionLink(
+                        "Zagraj",             // linkText
+                        "lobby",                  // action
+                        "Games",             // controller
+                        new { game = item.Name }, // routeValues
+                        null                        // htmlAttributes
+                    )
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
