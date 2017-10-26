@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameApplication.Controllers;
+using GameApplication.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +25,9 @@ namespace GameApplication
         {
             services.AddMvc();
             services.AddSignalR();
+
+            services.AddSingleton<GameService>();
+            services.AddSingleton<LobbyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

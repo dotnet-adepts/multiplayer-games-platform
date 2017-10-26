@@ -1,0 +1,20 @@
+﻿@*TODO: refresh using ajax or websocket*@
+@model GameApplication.Models.Games.Lobby
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Looby id: @Model.Id</h2>
+<hr/>
+<b>Gra:</b> @Model.Game.Name <br/>
+<b>Minimalna ilość graczy:</b> @Model.Game.MinNumberOfPlayers <br/>
+<b>Maksymalna liczba graczy:</b> @Model.Game.MaxNumberOfPlayers <br/> 
+<b>Gospodarz:</b> @Model.Owner.UserName <br/>
+<b>Liczba połączonych graczy:</b> @Model.GetNumberOfConnectedPlayers() <br/>
+<ul>
+    @foreach (var connectedPlayer in Model.ConnectedPlayers)
+    {
+        <li>@connectedPlayer.UserName</li>
+    }
+</ul>

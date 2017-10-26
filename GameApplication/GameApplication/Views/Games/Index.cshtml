@@ -1,14 +1,10 @@
-﻿@model IEnumerable<GameApplication.Models.GameDescription>
+﻿@model IEnumerable<GameApplication.Models.Games.Game>
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h2>Index</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -21,23 +17,22 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var game in Model)
         {
             <tr>
-                <td>@item.Name</td>
-                <td>@item.Desription</td>
-                <td>@item.MinNumberOfPlayers</td>
-                <td>@item.MaxNumberOfPlayers</td>
-                <td>@item.Category</td>
+                <td>@game.Name</td>
+                <td>@game.Desription</td>
+                <td>@game.MinNumberOfPlayers</td>
+                <td>@game.MaxNumberOfPlayers</td>
+                <td>@game.Category</td>
                 <td>
-                    @Html.ActionLink("Zagraj", @item.Name + "/lobby") 
                     @Html.ActionLink(
                         "Zagraj",             // linkText
-                        "lobby",                  // action
-                        "Games",             // controller
-                        new { game = item.Name }, // routeValues
+                        $"Index",                  // action
+                        $"Lobby",             // controller
+                        new { gameName = game.Name }, // routeValues
                         null                        // htmlAttributes
-                    )
+                        )
                 </td>
             </tr>
         }
