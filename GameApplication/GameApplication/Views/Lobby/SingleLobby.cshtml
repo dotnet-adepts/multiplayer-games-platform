@@ -5,6 +5,11 @@
     ViewData["Title"] = "Lobby";
 }
 
+@if ((bool)ViewData["full"])
+{
+    <h3 style="color: red">Lobby pełne - poszukaj innej gry lub poczekaj na wolne miejsce</h3>
+}
+
 <h2>Looby id: @Model.Id</h2>
 <hr/>
 <b>Gra:</b> @Model.Game.Name <br/>

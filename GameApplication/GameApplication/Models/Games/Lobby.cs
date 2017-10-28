@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using GameApplication.Exceptions;
 
 namespace GameApplication.Models.Games
 {
@@ -32,7 +33,7 @@ namespace GameApplication.Models.Games
                 ConnectedPlayers.Add(newPlayer);
             } else
             {
-                //TODO : throw some exception
+                throw new FullLobbyExceptioncs();
             }
         }
 
