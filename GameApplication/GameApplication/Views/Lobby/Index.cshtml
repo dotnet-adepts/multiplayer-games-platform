@@ -1,13 +1,12 @@
 ﻿@model IEnumerable<GameApplication.Models.Games.Lobby>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lobby";
 }
 
-<h2>Index</h2>
+<h2>@ViewData["gameName"] - Lobby</h2>
 
-@Html.ActionLink("Nowa gra", "create", new {gameName = @ViewData["gameName"] }, null);
-
+@Html.ActionLink("Nowa gra", "create", new { gameName = ViewData["gameName"] }, null)
 @if (Model.Count() == 0)
 {
     <p>Nikt aktualnie nie czeka na przeciwnika - stwórz nową poczekalnie i zaproś znajomych</p>
@@ -18,6 +17,7 @@ else
         <thead>
         <tr>
             <th>ID</th>
+            <th>Gospodarz</th>
             <th>Ilość oczekujących graczy</th>
             <th>Akcja</th>
         </tr>
@@ -27,12 +27,17 @@ else
         {
             <tr>
                 <td>@lobby.Id</td>
+                <td>@lobby.Owner.UserName</td>
                 <td>@lobby.GetNumberOfConnectedPlayers()</td>
-                <td>@Html.ActionLink("Dołącz", "Join", new {gameName = @ViewData["gameName"], lobbyId=@lobby.Id }, null);</td>
+                <td>@Html.ActionLink("Dołącz", "Join", new {gameName = ViewData["gameName"], lobbyId=lobby.Id }, null)</td>
             </tr>
         }
         </tbody>
     </table>
 }
+
+<br/><br/>
+<h3 style="color:red">TODO - Lista nie aktualizauje sie w przypadku uzycia przycisku wstecz</h3>
+<h3 style="color:red">TODO - Ukrycie rozpoczetych gier</h3>
 
 

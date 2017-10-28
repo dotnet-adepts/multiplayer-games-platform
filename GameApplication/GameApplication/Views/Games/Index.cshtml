@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<GameApplication.Models.Games.Game>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Wybor gry";
 }
 
-<h2>Index</h2>
+<h2>Wybierz gre</h2>
 <table class="table">
     <thead>
         <tr>
@@ -28,8 +28,8 @@
                 <td>
                     @Html.ActionLink(
                         "Zagraj",             // linkText
-                        $"Index",                  // action
-                        $"Lobby",             // controller
+                        "Index",                  // action
+                        "Lobby",             // controller
                         new { gameName = game.Name }, // routeValues
                         null                        // htmlAttributes
                         )

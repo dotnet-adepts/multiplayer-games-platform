@@ -13,5 +13,6 @@ namespace GameApplication.Models.Games
         {
             UserName = userName;
         }
+
     }
 }

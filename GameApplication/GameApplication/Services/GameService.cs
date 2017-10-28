@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameApplication.Controllers;
+using GameApplication.Controllers.GamesSession;
 using GameApplication.Models.Games;
 
 namespace GameApplication.Services
@@ -12,8 +14,8 @@ namespace GameApplication.Services
 
         public GameService()
         {
-            var snake = new Game("Snake", "Steruj wężem, pokonaj innych!", 2, 4, "Zręcznościowe");
-            var battleship = new Game("Statki", "Zatop statki przeciwnika zanim on zatopi Twoje!", 2, 2, "Strategiczne");
+            var snake = new Game(Game.Names.Snake + " NIE DZIAŁA", "Steruj wężem, pokonaj innych!", 2, 4, "Zręcznościowe", typeof(SnakeSessionController)); //TODO : implement or delete
+            var battleship = new Game(Game.Names.Battleship, "Zatop statki przeciwnika zanim on zatopi Twoje!", 2, 2, "Strategiczne", typeof(BattleshipSessionController));
             this._games = new List<Game> { snake, battleship };
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GameApplication.Controllers;
 using GameApplication.Services;
+using GameApplication.Services.GamesSessions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,7 @@ namespace GameApplication
 
             services.AddSingleton<GameService>();
             services.AddSingleton<LobbyService>();
+            services.AddSingleton<BattleshipSessionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,12 +51,12 @@ namespace GameApplication
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Games}/{action=Index}/{id?}");
             });
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<Controllers.ChatRoom>("chat");
+                routes.MapHub<ChatRoom>("chat");
             });
         }
     }

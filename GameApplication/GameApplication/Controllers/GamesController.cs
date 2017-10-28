@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using GameApplication.Services;
 using Microsoft.AspNetCore.Mvc;
-using GameApplication.Models.Games;
-using GameApplication.Services;
 
 namespace GameApplication.Controllers
 {
     public class GamesController : Controller
     {
-
         private readonly GameService _gameService;
 
         public GamesController(GameService gameService)
@@ -24,11 +17,5 @@ namespace GameApplication.Controllers
             var allGames = _gameService.FindAll();
             return View(allGames);
         }
-
-        public string Lobby(string game)
-        {
-            return "wybrana gra: " + game;
-        }
-
     }
 }

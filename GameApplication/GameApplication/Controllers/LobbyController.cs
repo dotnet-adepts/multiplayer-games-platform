@@ -30,17 +30,17 @@ namespace GameApplication.Controllers
         {
             var mockedPlayer = new Player("mockedUser-lobbyOwner");//TODO: get logged user
             var lobby = _lobbyService.Create(gameName, mockedPlayer);
-            return redirectToLobby(lobby.Id, gameName);
+            return RedirectToLobby(lobby.Id, gameName);
         }
 
         public IActionResult Join(long lobbyId, string gameName)
         {
             var mockedPlayer = new Player("mockedUser-player");
             _lobbyService.Join(lobbyId, gameName, mockedPlayer);
-            return redirectToLobby(lobbyId, gameName);
+            return RedirectToLobby(lobbyId, gameName);
         }
 
-        private IActionResult redirectToLobby(long lobbyId, string gameName)
+        private IActionResult RedirectToLobby(long lobbyId, string gameName)
         {
             return RedirectToAction("FindOne", new { gameName = gameName, lobbyId = lobbyId });
         }
@@ -48,6 +48,7 @@ namespace GameApplication.Controllers
         public IActionResult FindOne(long lobbyId, string gameName)
         {
             var lobby = _lobbyService.FindByIdAndGameName(lobbyId, gameName);
+            ViewData["loggedUser"] = lobby.ConnectedPlayers.Count == 1 ? "mockedUser-lobbyOwner" : "mockedUser-player"; //TODO: inject logged user
             return View("SingleLobby", lobby);
         }
 
