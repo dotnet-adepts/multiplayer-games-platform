@@ -22,6 +22,7 @@ namespace GameApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +45,11 @@ namespace GameApplication
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Template}/{action=Index}/{id?}");
+            });
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<Controllers.ChatRoom>("chat");
             });
         }
     }
