@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameApplication.Data;
+using GameApplication.Repositories;
+using GameApplication.Repositories.Interfaces;
+using GameApplication.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +26,15 @@ namespace GameApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<GameContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IGameRepository, GameRepository>();
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IGameService, GameService>();
+
             services.AddMvc();
             services.AddSignalR();
         }
