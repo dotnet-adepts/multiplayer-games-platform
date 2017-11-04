@@ -1,0 +1,40 @@
+﻿@model IEnumerable<GameApplication.Models.Games.Game>
+
+@{
+    ViewData["Title"] = "Wybor gry";
+}
+
+<h2>Wybierz gre</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Opis</th>
+            <th>Minimalna liczna graczy</th>
+            <th>Maksymalna liczna graczy</th>
+            <th>Kategoria</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model)
+        {
+            <tr>
+                <td>@game.Name</td>
+                <td>@game.Desription</td>
+                <td>@game.MinNumberOfPlayers</td>
+                <td>@game.MaxNumberOfPlayers</td>
+                <td>@game.Category</td>
+                <td>
+                    @Html.ActionLink(
+                        "Zagraj",             // linkText
+                        "Index",                  // action
+                        "Lobby",             // controller
+                        new { gameName = game.Name }, // routeValues
+                        null                        // htmlAttributes
+                        )
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -30,10 +30,12 @@
                 <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
                     <i class="material-icons">more_vert</i>
                 </button>
+                <a asp-area="" asp-controller="Games" asp-action="Index" class="navbar-brand">GameApplication</a>
+            </div>
+            <div class="navbar-collapse collapse">
                 <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-                    <li class="mdl-menu__item">About</li>
-                    <li class="mdl-menu__item">Contact</li>
-                    <li class="mdl-menu__item">Legal information</li>
+                    <li class="mdl-menu__item"><a asp-area="" asp-controller="Games" asp-action="Index">Lista gier</a></li>
+                    <li class="mdl-menu__item"><a asp-area="" asp-controller="Home" asp-action="Index">Socket demo</a></li>
                 </ul>
             </div>
         </header>

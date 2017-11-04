@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameApplication.Controllers;
+using GameApplication.Services.GamesSessions;
 using GameApplication.Data;
 using GameApplication.Repositories;
 using GameApplication.Repositories.Interfaces;
@@ -30,13 +32,14 @@ namespace GameApplication
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IGameRepository, GameRepository>();
-
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IGameService, GameService>();
 
             services.AddMvc();
             services.AddSignalR();
+
+            services.AddSingleton<GameService>();
+            services.AddSingleton<LobbyService>();
+            services.AddSingleton<BattleshipSessionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,12 +61,12 @@ namespace GameApplication
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Template}/{action=Index}/{id?}");
+                    template: "{controller=Games}/{action=Index}/{id?}");
             });
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<Controllers.ChatRoom>("chat");
+                routes.MapHub<ChatRoom>("chat");
             });
         }
     }
