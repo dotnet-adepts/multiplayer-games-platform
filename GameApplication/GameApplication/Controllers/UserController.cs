@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GameApplication.Controllers
 {
-    [Route("/users")]
+    [Route("rest/users")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
