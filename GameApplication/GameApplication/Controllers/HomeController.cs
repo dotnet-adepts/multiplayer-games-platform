@@ -5,11 +5,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GameApplication.Models;
+using GameApplication.Data;
+using GameApplication.Services;
 
 namespace GameApplication.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly IUserService _userService;
+        private readonly IGameService _gameService;
+
+        public HomeController(IUserService userService, IGameService gameService)
+        {
+            _userService = userService;
+            _gameService = gameService;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -33,5 +45,6 @@ namespace GameApplication.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }
