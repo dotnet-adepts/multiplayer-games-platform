@@ -32,10 +32,7 @@ namespace GameApplication
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IGameRepository, GameRepository>();
-
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IGameService, GameService>();
 
             services.AddMvc();
             services.AddSignalR();
