@@ -13,15 +13,6 @@ namespace GameApplication.Controllers
     public class HomeController : Controller
     {
 
-        private readonly IUserService _userService;
-        private readonly IGameService _gameService;
-
-        public HomeController(IUserService userService, IGameService gameService)
-        {
-            _userService = userService;
-            _gameService = gameService;
-        }
-
         public IActionResult Index()
         {
             return View();

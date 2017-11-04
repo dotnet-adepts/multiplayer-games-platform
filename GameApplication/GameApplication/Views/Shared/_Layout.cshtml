@@ -57,6 +57,8 @@
                 </div>
             </header>
             <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+                <a class="mdl-navigation__link" href="@Url.Action("Index", "Games")"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Lista gier</a>
+                <a class="mdl-navigation__link" href="@Url.Action("Index", "Home")"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Socket demo</a>
                 <a class="mdl-navigation__link" href="@Url.Action("Index", "Template")"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Index</a>
                 <a class="mdl-navigation__link" href="@Url.Action("CircleSection", "Template")"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Koła</a>
                 <a class="mdl-navigation__link" href="@Url.Action("DiagramSection", "Template")"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">delete</i>Diagramy</a>
@@ -71,11 +73,13 @@
             </nav>
         </div>
         <main class="mdl-layout__content mdl-color--grey-100">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; Madzia, Ania, Ada, Mati, Kurzel, Pita, Michałł</p>
-            </footer>
+            <div style ="padding-left: 10px; padding-right: 10px">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; Madzia, Ania, Ada, Mati, Kurzel, Pita, Michałł</p>
+                </footer>
+            </div>
         </main>
     </div>
 
