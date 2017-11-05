@@ -1,1 +1,6 @@
-﻿
+﻿/* General Chat message - scrollable list */
+
+.demo-list-item {
+    max-height: 300px;
+    overflow-y: auto;
+}

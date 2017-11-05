@@ -64,11 +64,15 @@ namespace GameApplication
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Games}/{action=Index}/{id?}");
+                
+                routes.MapRoute(
+                    name: "GeneralChat",
+                    template: "{controller=GeneralChat}/{action=Index}");
             });
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<ChatRoom>("chat");
+                routes.MapHub<ChatRoom>("general_chat");
             });
         }
     }
