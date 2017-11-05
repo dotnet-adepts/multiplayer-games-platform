@@ -13,6 +13,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using GameApplication.Data;
+using GameApplication.Models;
+using GameApplication.Services;
 
 namespace GameApplication
 {
@@ -34,6 +39,13 @@ namespace GameApplication
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
 
+			   services.AddIdentity<ApplicationUser, IdentityRole>()
+                  .AddEntityFrameworkStores<ApplicationDbContext>()
+				  .AddDefaultTokenProviders();
+ 
+
+             services.AddTransient<IEmailSender, EmailSender>();
+			
             services.AddMvc();
             services.AddSignalR();
 
@@ -49,6 +61,7 @@ namespace GameApplication
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+				app.UseDatabaseErrorPage();
             }
             else
             {
@@ -56,6 +69,8 @@ namespace GameApplication
             }
 
             app.UseStaticFiles();
+			
+			app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
