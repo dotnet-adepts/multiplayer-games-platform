@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using GameApplication.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <span>@UserManager.GetUserName(User)</span>
+}
+else
+{
+    <span>Zaloguj się!</span>
+}
