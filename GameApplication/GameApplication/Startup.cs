@@ -47,8 +47,13 @@ namespace GameApplication
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
-                googleOptions.ClientId = Configuration["web:client_id"];
-                googleOptions.ClientSecret = Configuration["web:client_secret"];
+                googleOptions.ClientId = Configuration["Authentication:Google:client_id"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:client_secret"];
+            });
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
 
             services.AddTransient<IEmailSender, EmailSender>();
