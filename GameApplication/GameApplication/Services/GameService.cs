@@ -16,6 +16,11 @@ namespace GameApplication.Services
         {
             var snake = new Game(Game.Names.Snake + " NIE DZIAŁA", "Steruj wężem, pokonaj innych!", 2, 4, "Zręcznościowe", typeof(SnakeSessionController)); //TODO : implement or delete
             var battleship = new Game(Game.Names.Battleship, "Zatop statki przeciwnika zanim on zatopi Twoje!", 2, 2, "Strategiczne", typeof(BattleshipSessionController));
+
+            // TODO I didn't want to mess up with someone else's code (Game constructor), so I put it in here
+            snake.ThumbnailImagePath = "images/snake_thumbnail.png";
+            battleship.ThumbnailImagePath = "images/battleships_thumbnail.png";
+
             this._games = new List<Game> { snake, battleship };
         }
 
