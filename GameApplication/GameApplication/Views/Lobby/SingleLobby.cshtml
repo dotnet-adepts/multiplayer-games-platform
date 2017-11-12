@@ -5,41 +5,52 @@
     ViewData["Title"] = "Lobby";
 }
 
+<style>
+    .alert {
+        padding: 20px;
+        background-color: #ff9800;
+        color: white;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .closebtn:hover { color: black; }
+</style>
 
 <script>
-    JoinLobby(@Model.Id, "test")
+    $(document).ready(function() {
+        JoinLobby(@Model.Id, "@Model.Game.Name", @Model.Game.MinNumberOfPlayers);
+    });
 </script>
 
 
-@if ((bool)ViewData["full"])
-{
-    <h3 style="color: red">Lobby pełne - poszukaj innej gry lub poczekaj na wolne miejsce</h3>
-}
-
 <h2>Looby id: @Model.Id</h2>
+
+<div id="fullLobby" class="alert" style="display: none">
+    Lobby jest pełne - nie możesz dołączyć
+</div>
+
 <hr/>
 <b>Gra:</b> @Model.Game.Name <br/>
 <b>Minimalna ilość graczy:</b> @Model.Game.MinNumberOfPlayers <br/>
 <b>Maksymalna liczba graczy:</b> @Model.Game.MaxNumberOfPlayers <br/>
-<b>Gospodarz:</b> @Model.Owner.UserName <br/>
-<b>Liczba połączonych graczy:</b> @Model.GetNumberOfConnectedPlayers() <br/>
-<ul>
-    @foreach (var connectedPlayer in Model.ConnectedPlayers)
-    {
-        <li>@connectedPlayer.UserName</li>
-    }
-</ul>
+<b>Gospodarz:</b> @Model.Owner.GetName() <br/>
+<b>Liczba połączonych graczy:</b> <span id="numberOfPlayers">@Model.GetNumberOfConnectedPlayers() </span> <br/>
+<ul id="connectedPlayers"></ul>
 
-@*(string) ViewData["loggedUser"] != "mockedUser-lobbyOwner" //TODO - only owner should see start button *@
-@if (Model.ConnectedPlayers.Count() >= Model.Game.MinNumberOfPlayers)
+
+@if ((string) ViewData["loggedUser"] == Model.Owner.GetName())
 {
-    @Html.ActionLink("Rozpoczniej gre (Gospodarz)", "StartGame", Model.Game.GameSessionControllerName, new {lobbyId = Model.Id})
-    <br //>
-    @Html.ActionLink("Dołącz do gry (Inni) - tymczasowy przycisk", "JoinGame", Model.Game.GameSessionControllerName, new {lobbyId = Model.Id})
+    <p id="startGame" style="display: none">
+        @Html.ActionLink("Rozpoczniej gre (Gospodarz)", "StartGame", Model.Game.GameSessionControllerName, new {lobbyId = Model.Id})
+    </p>
 }
-
-
-<br/><br/>
-<h3 style="color: red">TODO - Przycisk roczpoczynania tylko dla gospodarza</h3>
-<h3 style="color: red">TODO - Odswiezanie (Ajax/Websocket). Wymaga dodania metody kontrolera ktora bedzie zwracala obiekt z infomacją o podłączonych użytkownikach oraz flage czy gra sie rozpoczela. Jesli sie rozpoczela to przekierowanie uzytkownika na adres JoinGame?lobbyId=X</h3>
-<h3 style="color: red">TODO - Wyjście z lobby == zwolnienie miejsca dla innych </h3>

@@ -27,7 +27,7 @@ else
         {
             <tr>
                 <td>@lobby.Id</td>
-                <td>@lobby.Owner.UserName</td>
+                <td>@lobby.Owner.GetName()</td>
                 <td>@lobby.GetNumberOfConnectedPlayers()</td>
                 <td>@Html.ActionLink("Dołącz", "Join", new {gameName = ViewData["gameName"], lobbyId=lobby.Id }, null)</td>
             </tr>

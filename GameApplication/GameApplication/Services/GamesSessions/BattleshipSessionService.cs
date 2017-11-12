@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Security.Principal;
 using GameApplication.Models.Games;
 using GameApplication.Models.Games.Battleship;
+using Microsoft.AspNetCore.Identity;
 
 namespace GameApplication.Services.GamesSessions
 {
@@ -21,7 +24,7 @@ namespace GameApplication.Services.GamesSessions
         {
 
             var lobby = _lobbyService.FindByIdAndGameName(lobbyId, GameName);
-            if (lobby.Owner.UserName != loggedUser.UserName)
+            if (lobby.Owner != loggedUser)
             {
                 throw new UnauthorizedAccessException("You have to be an owner of lobby to start game");
             }
@@ -40,8 +43,7 @@ namespace GameApplication.Services.GamesSessions
         public BattleshipSession FindById(int gameSessionId, Player loggedUser)
         {
             var session = _sessions[gameSessionId];
-            var loggedUserUserName = loggedUser.UserName;
-            if (session.PlayerOne.UserName != loggedUserUserName && session.PlayerTwo.UserName != loggedUserUserName)
+            if (session.PlayerOne != loggedUser && session.PlayerTwo != loggedUser)
             {
                 throw new UnauthorizedAccessException("You are not allowed to join this game");
             }

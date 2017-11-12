@@ -1,4 +1,8 @@
-﻿namespace GameApplication.Models.Games.Battleship
+﻿using System.Security.Claims;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Identity;
+
+namespace GameApplication.Models.Games.Battleship
 {
     public class BattleshipSession
     {

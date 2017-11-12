@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using GameApplication.Exceptions;
+using Microsoft.AspNetCore.Identity;
 
 namespace GameApplication.Models.Games
 {
@@ -27,6 +30,11 @@ namespace GameApplication.Models.Games
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddPlayer(Player newPlayer)
         {
+            if (ConnectedPlayers.Contains(newPlayer))
+            {
+                return;
+            }
+
             var numberOfPlayer = ConnectedPlayers.Count();
             if (numberOfPlayer < Game.MaxNumberOfPlayers)
             {
@@ -35,6 +43,11 @@ namespace GameApplication.Models.Games
             {
                 throw new FullLobbyExceptioncs();
             }
+        }
+
+        public void RemovePlayer(Player player)
+        {
+            ConnectedPlayers.Remove(player);
         }
 
         public int GetNumberOfConnectedPlayers()

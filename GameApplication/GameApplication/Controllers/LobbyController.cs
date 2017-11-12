@@ -28,38 +28,19 @@ namespace GameApplication.Controllers
 
         public IActionResult Create(string gameName)
         {
-            var mockedPlayer = new Player("mockedUser-lobbyOwner"); //TODO: get logged user
-            var lobby = _lobbyService.Create(gameName, mockedPlayer);
-            return RedirectToLobby(lobby.Id, gameName, false);
+            var lobby = _lobbyService.Create(gameName, new Player(User));
+            return RedirectToLobby(lobby.Id, gameName);
         }
 
         public IActionResult Join(long lobbyId, string gameName)
         {
-            var mockedPlayer = new Player("mockedUser-player");
-            try
-            {
-                _lobbyService.Join(lobbyId, gameName, mockedPlayer);
-            }
-            catch (FullLobbyExceptioncs e)
-            {
-                return RedirectToLobby(lobbyId, gameName, true);
-            }
-            return RedirectToLobby(lobbyId, gameName, false);
+            return RedirectToLobby(lobbyId, gameName);
         }
 
-        private IActionResult RedirectToLobby(long lobbyId, string gameName, bool full)
-        {
-            return RedirectToAction("FindOne", new {gameName = gameName, lobbyId = lobbyId, full = full});
-        }
-
-        public IActionResult FindOne(long lobbyId, string gameName, bool full)
+        private IActionResult RedirectToLobby(long lobbyId, string gameName)
         {
             var lobby = _lobbyService.FindByIdAndGameName(lobbyId, gameName);
-            ViewData["loggedUser"] =
-                lobby.ConnectedPlayers.Count == 1
-                    ? "mockedUser-lobbyOwner"
-                    : "mockedUser-player"; //TODO: inject logged user
-            ViewData["full"] = full;
+            ViewData["loggedUser"] = User.Identity.Name;
             return View("SingleLobby", lobby);
         }
     }

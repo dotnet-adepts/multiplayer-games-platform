@@ -17,15 +17,13 @@ namespace GameApplication.Controllers.GamesSession
 
         public IActionResult StartGame(int lobbyId)
         {
-            var loggedUser = new Player("mockedUser-lobbyOwner"); //TODO : get logged user
-            var battleshipSession = _sessionService.CreateNewSession(lobbyId, loggedUser);
+            var battleshipSession = _sessionService.CreateNewSession(lobbyId, new Player(User));
             return View(battleshipSession);
         }
 
         public IActionResult JoinGame(int lobbyId)
         {
-            var loggedUser = new Player("mockedUser-player"); //TODO : get logged user
-            var battleshipSession = _sessionService.FindById(lobbyId, loggedUser);
+            var battleshipSession = _sessionService.FindById(lobbyId, new Player(User));
             return View("StartGame", battleshipSession);
         }
     }
