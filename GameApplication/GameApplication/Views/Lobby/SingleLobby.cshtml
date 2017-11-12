@@ -5,6 +5,12 @@
     ViewData["Title"] = "Lobby";
 }
 
+
+<script>
+    JoinLobby(@Model.Id, "test")
+</script>
+
+
 @if ((bool)ViewData["full"])
 {
     <h3 style="color: red">Lobby pełne - poszukaj innej gry lub poczekaj na wolne miejsce</h3>

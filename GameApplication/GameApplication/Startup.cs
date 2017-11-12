@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GameApplication.Controllers;
+﻿using GameApplication.Controllers;
 using GameApplication.Services.GamesSessions;
 using GameApplication.Data;
+using GameApplication.Hubs;
 using GameApplication.Repositories;
 using GameApplication.Repositories.Interfaces;
 using GameApplication.Services;
@@ -67,6 +64,7 @@ namespace GameApplication
             app.UseSignalR(routes =>
             {
                 routes.MapHub<ChatRoom>("chat");
+                routes.MapHub<LobbyHub>("lobbyHub");
             });
         }
     }
