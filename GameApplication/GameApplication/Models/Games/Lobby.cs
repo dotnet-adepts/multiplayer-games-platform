@@ -47,7 +47,10 @@ namespace GameApplication.Models.Games
 
         public void RemovePlayer(Player player)
         {
-            ConnectedPlayers.Remove(player);
+            lock (this)
+            {
+                ConnectedPlayers.Remove(player);
+            }
         }
 
         public int GetNumberOfConnectedPlayers()

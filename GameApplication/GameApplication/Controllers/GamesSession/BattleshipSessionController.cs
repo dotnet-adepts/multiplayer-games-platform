@@ -15,12 +15,6 @@ namespace GameApplication.Controllers.GamesSession
         }
 
 
-        public IActionResult StartGame(int lobbyId)
-        {
-            var battleshipSession = _sessionService.CreateNewSession(lobbyId, new Player(User));
-            return View(battleshipSession);
-        }
-
         public IActionResult JoinGame(int lobbyId)
         {
             var battleshipSession = _sessionService.FindById(lobbyId, new Player(User));

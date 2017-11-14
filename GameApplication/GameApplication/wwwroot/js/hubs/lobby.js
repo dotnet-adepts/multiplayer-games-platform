@@ -37,4 +37,15 @@ function JoinLobby(lobbyId, gameName, minNumberOfPlayers) {
             $("#fullLobby").show();
         }
     );
+
+    connection.on('startGame',
+        (redirectUrl) => {
+            window.location.replace(redirectUrl);
+        }
+    );
+
+
+    $("#startGame").click(function () {
+        connection.invoke('StartGame', lobbyId, gameName);
+    });
 }

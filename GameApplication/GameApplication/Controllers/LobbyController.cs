@@ -29,19 +29,16 @@ namespace GameApplication.Controllers
         public IActionResult Create(string gameName)
         {
             var lobby = _lobbyService.Create(gameName, new Player(User));
-            return RedirectToLobby(lobby.Id, gameName);
+            //return RedirectToLobby(lobby.Id, gameName);
+            return RedirectToAction("Join", new { lobbyId = lobby.Id, gameName = gameName});
         }
 
         public IActionResult Join(long lobbyId, string gameName)
-        {
-            return RedirectToLobby(lobbyId, gameName);
-        }
-
-        private IActionResult RedirectToLobby(long lobbyId, string gameName)
         {
             var lobby = _lobbyService.FindByIdAndGameName(lobbyId, gameName);
             ViewData["loggedUser"] = User.Identity.Name;
             return View("SingleLobby", lobby);
         }
+
     }
 }

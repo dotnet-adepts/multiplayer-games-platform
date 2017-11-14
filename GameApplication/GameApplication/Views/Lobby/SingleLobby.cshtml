@@ -50,7 +50,5 @@
 
 @if ((string) ViewData["loggedUser"] == Model.Owner.GetName())
 {
-    <p id="startGame" style="display: none">
-        @Html.ActionLink("Rozpoczniej gre (Gospodarz)", "StartGame", Model.Game.GameSessionControllerName, new {lobbyId = Model.Id})
-    </p>
+    <button id="startGame" style="display: none">Roczpocznij gre</button>
 }

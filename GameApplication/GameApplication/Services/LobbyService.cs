@@ -42,9 +42,12 @@ namespace GameApplication.Services
 
         public Lobby FindByIdAndGameName(long lobbyId, string gameName)
         {
-            var lobb = _lobbies[gameName].Find(lobby => lobby.Id == lobbyId);
-            return lobb;
+            return _lobbies[gameName].Find(lobby => lobby.Id == lobbyId);
         }
 
+        public void Remove(string gameName, Lobby lobby)
+        {
+            _lobbies[gameName].Remove(lobby);
+        }
     }
 }
