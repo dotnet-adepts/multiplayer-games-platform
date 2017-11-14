@@ -8,7 +8,7 @@ namespace GameApplication.Models.AccountViewModels
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Adres e-mail jest wymagany")]
         [EmailAddress]
         public string Email { get; set; }
 
@@ -16,7 +16,7 @@ namespace GameApplication.Models.AccountViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Nie pamiętasz?")]
         public bool RememberMe { get; set; }
     }
 }
