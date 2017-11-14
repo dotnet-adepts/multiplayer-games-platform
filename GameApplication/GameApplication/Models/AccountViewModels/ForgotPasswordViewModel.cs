@@ -8,7 +8,7 @@ namespace GameApplication.Models.AccountViewModels
 {
     public class ForgotPasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Adres e-mail jest wymagany")]
         [EmailAddress]
         public string Email { get; set; }
     }
