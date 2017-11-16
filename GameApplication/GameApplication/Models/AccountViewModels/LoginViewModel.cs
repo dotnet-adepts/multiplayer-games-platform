@@ -13,7 +13,7 @@ namespace GameApplication.Models.AccountViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Hasło jest wymagane")]
-        [DataType(DataType.Password]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Display(Name = "Zapamiętać?")]
