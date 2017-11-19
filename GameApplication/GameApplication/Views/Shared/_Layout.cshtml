@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GameApplication</title>
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/css/styles.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
-    </environment>
+    <!-- Stylesheets -->
+        <!-- CDN resources -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <!-- Theme color -->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-deep_purple.min.css" /> 
+
+        <!-- Local resources -->
+    <link rel="stylesheet" href="~/css/material_design_template.css">
+    <link rel="stylesheet" href="~/css/custom.css">
 </head>
 <body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -72,50 +76,19 @@
             </nav>
         </div>
         <main class="mdl-layout__content mdl-color--grey-100">
-            <div style ="padding-left: 10px; padding-right: 10px">
+            <div class="mdl-grid demo-content">
                 @RenderBody()
-                <hr />
-                <footer>
-                    <p>&copy; Madzia, Ania, Ada, Mati, Kurzel, Pita, Michałł</p>
-                </footer>
             </div>
         </main>
     </div>
 
-    <environment include="Development">
-        <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    </environment>
-
-     <!-- Development specific scripts -->
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-
-        <!-- Regular SignalR -->
-        <script src="~/lib/signalr-client/dist/browser/signalr-client-1.0.0-alpha2-final.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-
-    <!-- Place for minified scripts, production specific -->
-    <environment exclude="Development">
-        <!-- TODO replace CDN links with local files -->
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-
-        <!-- Minified SignalR -->
-        <script src="~/lib/signalr-client/dist/browser/signalr-client-1.0.0-alpha2-final.min.js"></script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
-    @RenderSection("Scripts", required: false)
+    <!-- JavaScript -->
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="~/lib/signalr-client/dist/browser/signalr-client-1.0.0-alpha2-final.js"></script>
+    <script src="~/js/chat_signalr.js" asp-append-version="true"></script>
+    <script src="~/js/custom.js" asp-append-version="true"></script>
+     @RenderSection("Scripts", required: false)
 </body>
 </html>
