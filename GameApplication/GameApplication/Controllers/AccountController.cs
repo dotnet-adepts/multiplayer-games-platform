@@ -74,7 +74,7 @@ namespace GameApplication.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Nie udana próba logowania.");
+                    ModelState.AddModelError(string.Empty, "Nieudana próba logowania.");
                     return View(model);
                 }
             }
