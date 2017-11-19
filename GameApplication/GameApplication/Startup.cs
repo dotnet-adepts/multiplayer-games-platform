@@ -35,12 +35,13 @@ namespace GameApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=linux_dev.db"));
-            // TODO revert changes
+            // Uncomment while using Linux <3
             // MS SqlServer throws NotSupported on Linux platform, so I temporarily changed it to Sqlite
-            // options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=linux_dev.db"));
+
+            // Windows
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
