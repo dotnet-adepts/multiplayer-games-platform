@@ -34,12 +34,12 @@ namespace GameApplication.Hubs
                 Context.Connection.Metadata.Add("lobbyId", lobbyId);
                 Context.Connection.Metadata.Add("gameName", gameName);
                 await Groups.AddAsync(Context.ConnectionId, groupName);
-                await Clients.Group(groupName).InvokeAsync("updatePlayers", ConverPlayersToNamesList(lobby.ConnectedPlayers));
+                await Clients.Group(groupName).InvokeAsync("updatePlayers", ConvertPlayersToNames(lobby.ConnectedPlayers));
             }
             catch (FullLobbyExceptioncs e)
             {
                 await Clients.Client(Context.ConnectionId).InvokeAsync("handleFullLobby");
-                await Clients.Client(Context.ConnectionId).InvokeAsync("updatePlayers", ConverPlayersToNamesList(lobby.ConnectedPlayers));
+                await Clients.Client(Context.ConnectionId).InvokeAsync("updatePlayers", ConvertPlayersToNames(lobby.ConnectedPlayers));
             }
         }
 
@@ -70,7 +70,7 @@ namespace GameApplication.Hubs
             {
                 _lobbyService.Remove(gameName, lobby);
             }
-            Clients.Group(lobbyId.ToString()).InvokeAsync("updatePlayers", ConverPlayersToNamesList(lobby.ConnectedPlayers));
+            Clients.Group(lobbyId.ToString()).InvokeAsync("updatePlayers", ConvertPlayersToNames(lobby.ConnectedPlayers));
             return base.OnDisconnectedAsync(exception);
         }
 
@@ -80,7 +80,7 @@ namespace GameApplication.Hubs
             return new Player(Context.User);
         }
 
-        public List<string> ConverPlayersToNamesList(List<Player> players)
+        public List<string> ConvertPlayersToNames(List<Player> players)
         {
             var list = new List<string>();
             foreach (Player player in players)

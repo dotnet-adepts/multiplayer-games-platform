@@ -61,7 +61,7 @@ namespace GameApplication.Models.Games
 
         public IGameSession StartGameSession()
         {
-            return Game.StaGameSession(Id, ConnectedPlayers);
+            return Game.StartGameSession(Id, ConnectedPlayers);
         }
     }
 }

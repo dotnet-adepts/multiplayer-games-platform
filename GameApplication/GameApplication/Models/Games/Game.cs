@@ -27,7 +27,7 @@ namespace GameApplication.Models.Games
             GameSessionFactory = gameSessionFactory;
         }
 
-        public IGameSession StaGameSession(long lobbyId, List<Player> players)
+        public IGameSession StartGameSession(long lobbyId, List<Player> players)
         {
             return GameSessionFactory.Create(lobbyId, players);
         }
