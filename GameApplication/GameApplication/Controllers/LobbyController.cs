@@ -29,7 +29,6 @@ namespace GameApplication.Controllers
         public IActionResult Create(string gameName)
         {
             var lobby = _lobbyService.Create(gameName, new Player(User));
-            //return RedirectToLobby(lobby.Id, gameName);
             return RedirectToAction("Join", new { lobbyId = lobby.Id, gameName = gameName});
         }
 

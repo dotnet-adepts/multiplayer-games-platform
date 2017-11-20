@@ -34,12 +34,12 @@ namespace GameApplication.Hubs
                 Context.Connection.Metadata.Add("lobbyId", lobbyId);
                 Context.Connection.Metadata.Add("gameName", gameName);
                 await Groups.AddAsync(Context.ConnectionId, groupName);
-                await Clients.Group(groupName).InvokeAsync("updatePlayers", ConverPlayerListToNameList(lobby.ConnectedPlayers));
+                await Clients.Group(groupName).InvokeAsync("updatePlayers", ConverPlayersToNamesList(lobby.ConnectedPlayers));
             }
             catch (FullLobbyExceptioncs e)
             {
                 await Clients.Client(Context.ConnectionId).InvokeAsync("handleFullLobby");
-                await Clients.Client(Context.ConnectionId).InvokeAsync("updatePlayers", ConverPlayerListToNameList(lobby.ConnectedPlayers));
+                await Clients.Client(Context.ConnectionId).InvokeAsync("updatePlayers", ConverPlayersToNamesList(lobby.ConnectedPlayers));
             }
         }
 
@@ -53,7 +53,7 @@ namespace GameApplication.Hubs
                 throw new UnauthorizedAccessException("You have to be an owner of lobby to start game");
             }
             var players = lobby.ConnectedPlayers;
-            var gameSession = lobby.Game.GameSessionFactory.Create(lobbyId, players);
+            var gameSession = lobby.StartGameSession();
             _gameSessionService.AddSession(gameName, gameSession);
             await Clients.Group(lobbyId.ToString()).InvokeAsync("startGame", gameSession.GetJoinUrl());
         }
@@ -70,7 +70,7 @@ namespace GameApplication.Hubs
             {
                 _lobbyService.Remove(gameName, lobby);
             }
-            Clients.Group(lobbyId.ToString()).InvokeAsync("updatePlayers", ConverPlayerListToNameList(lobby.ConnectedPlayers));
+            Clients.Group(lobbyId.ToString()).InvokeAsync("updatePlayers", ConverPlayersToNamesList(lobby.ConnectedPlayers));
             return base.OnDisconnectedAsync(exception);
         }
 
@@ -80,7 +80,7 @@ namespace GameApplication.Hubs
             return new Player(Context.User);
         }
 
-        public List<string> ConverPlayerListToNameList(List<Player> players)
+        public List<string> ConverPlayersToNamesList(List<Player> players)
         {
             var list = new List<string>();
             foreach (Player player in players)

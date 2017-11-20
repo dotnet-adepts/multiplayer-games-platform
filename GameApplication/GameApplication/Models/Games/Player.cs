@@ -43,7 +43,6 @@ namespace GameApplication.Models.Games
             return obj1.Equals(obj2);
         }
 
-        // this is second one '!='
         public static bool operator !=(Player obj1, Player obj2)
         {
             return !obj1.Equals(obj2);

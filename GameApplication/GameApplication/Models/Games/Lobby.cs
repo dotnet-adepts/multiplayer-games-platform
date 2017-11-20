@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using GameApplication.Exceptions;
+using GameApplication.Models.Games.Battleship;
 using Microsoft.AspNetCore.Identity;
 
 namespace GameApplication.Models.Games
@@ -56,6 +57,11 @@ namespace GameApplication.Models.Games
         public int GetNumberOfConnectedPlayers()
         {
             return ConnectedPlayers.Count;
+        }
+
+        public IGameSession StartGameSession()
+        {
+            return Game.StaGameSession(Id, ConnectedPlayers);
         }
     }
 }

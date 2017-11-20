@@ -15,7 +15,7 @@ function JoinLobby(lobbyId, gameName, minNumberOfPlayers) {
             //update number of players
             $("#numberOfPlayers").html(players.length);
 
-            //update connected players lise
+            //update connected players list
             $("#connectedPlayers").html("");
             for (var i = 0; i < players.length; i++) {
                 $("#connectedPlayers").append('<li>' + players[i] + '</li>');

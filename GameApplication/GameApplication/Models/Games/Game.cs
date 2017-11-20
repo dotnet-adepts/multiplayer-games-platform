@@ -27,11 +27,17 @@ namespace GameApplication.Models.Games
             GameSessionFactory = gameSessionFactory;
         }
 
+        public IGameSession StaGameSession(long lobbyId, List<Player> players)
+        {
+            return GameSessionFactory.Create(lobbyId, players);
+        }
+
         public static class Names
         {
             public const string Snake = "Snake";
             public const string Battleship = "Statki";
         }
+
 
     }
 
