@@ -59,7 +59,7 @@ namespace GameApplication.Hubs
         }
 
 
-        public override Task OnDisconnectedAsync(Exception exception) //TODO : remove lobby when empty
+        public override Task OnDisconnectedAsync(Exception exception)
         {
             var lobbyId = (long) Context.Connection.Metadata["lobbyId"];
             var gameName = (string) Context.Connection.Metadata["gameName"];
