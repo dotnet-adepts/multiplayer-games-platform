@@ -1,40 +1,10 @@
 ﻿@model IEnumerable<GameApplication.Models.Games.Game>
 
 @{
-    ViewData["Title"] = "Wybor gry";
+    ViewData["Title"] = "Lista gier";
 }
-
-<h2>Wybierz gre</h2>
-<table class="table" style="width:100%">
-    <thead>
-        <tr>
-            <th>Nazwa</th>
-            <th>Opis</th>
-            <th>Minimalna liczna graczy</th>
-            <th>Maksymalna liczna graczy</th>
-            <th>Kategoria</th>
-            <th>Akcje</th>
-        </tr>
-    </thead>
-    <tbody style="text-align:center">
-        @foreach (var game in Model)
-        {
-            <tr>
-                <td>@game.Name</td>
-                <td>@game.Desription</td>
-                <td>@game.MinNumberOfPlayers</td>
-                <td>@game.MaxNumberOfPlayers</td>
-                <td>@game.Category</td>
-                <td>
-                    @Html.ActionLink(
-                        "Zagraj",             // linkText
-                        "Index",                  // action
-                        "Lobby",             // controller
-                        new { gameName = game.Name }, // routeValues
-                        null                        // htmlAttributes
-                        )
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@foreach (var game in Model)
+{   
+    @* Render a box for each gama available *@
+    @Html.Partial("~/Views/Template/_GameBox.cshtml", game)
+}

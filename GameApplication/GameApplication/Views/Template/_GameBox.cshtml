@@ -1,0 +1,34 @@
+@* Object type passed from the parent view *@
+@model GameApplication.Models.Games.Game
+
+<!-- Box element -->
+<div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+    <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+        <!-- Game name with thumbnail image-->
+        <div class="mdl-card__title mdl-card--expand mdl-color--teal-300" 
+            style="background-image: url('@Model.ThumbnailImagePath'); background-position: center;">
+            <h2 class="mdl-card__title-text">@Model.Name</h2>
+        </div>
+
+        <!-- Game description -->
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+            @Model.Description
+        </div>
+
+        <!-- Player amount info -->
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+            Liczba graczy - min @Model.MinNumberOfPlayers, max @Model.MaxNumberOfPlayers
+        </div>
+
+        <!-- Bottom content -->
+        <div class="mdl-card__actions mdl-card--border">
+            <!-- Play button -->
+            @Html.ActionLink("Graj", "Index", "Lobby", 
+                new { gameName = @Model.Name }, 
+                new { @class = "mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--blue-grey-50 mdl-color--deep-purple-500" })
+
+            <!-- Game category -->
+            <p class="mdl-button mdl-color-text--blue-grey-50 mdl-color--deep-purple-200">#@Model.Category</p>
+        </div>
+    </div>
+</div>
