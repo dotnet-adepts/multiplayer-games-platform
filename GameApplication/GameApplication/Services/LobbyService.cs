@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace GameApplication.Services
 {
@@ -36,18 +39,15 @@ namespace GameApplication.Services
             return lobby;
         }
 
-        public void Join(long lobbyId, string gameName, Player mockedPlayer)
-        {
-            var lobby = FindByIdAndGameName(lobbyId, gameName);
-            lobby.AddPlayer(mockedPlayer);
-        }
-
 
         public Lobby FindByIdAndGameName(long lobbyId, string gameName)
         {
-            var lobb = _lobbies[gameName].Find(lobby => lobby.Id == lobbyId);
-            return lobb;
+            return _lobbies[gameName].Find(lobby => lobby.Id == lobbyId);
         }
 
+        public void Remove(string gameName, Lobby lobby)
+        {
+            _lobbies[gameName].Remove(lobby);
+        }
     }
 }

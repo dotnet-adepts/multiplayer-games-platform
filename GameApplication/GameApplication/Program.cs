@@ -22,16 +22,6 @@ namespace GameApplication
             {
                 var services = scope.ServiceProvider;
                 var logger = services.GetRequiredService<ILogger<Program>>();
-                try
-                {
-                    var context = services.GetRequiredService<Data.GameContext>();
-                    DbInitializer.Initialize(context);
-                    logger.LogDebug("Context initialized");
-                }
-                catch (Exception ex)
-                {           
-                    logger.LogError(ex, "An error occurred while seeding the database.");
-                }
             }        
             host.Run();
         }

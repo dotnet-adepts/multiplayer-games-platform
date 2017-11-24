@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GameApplication.Controllers;
+﻿using GameApplication.Controllers;
 using GameApplication.Services.GamesSessions;
 using GameApplication.Data;
-using GameApplication.Repositories;
-using GameApplication.Repositories.Interfaces;
+using GameApplication.Hubs;
 using GameApplication.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,10 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using GameApplication.Data;
 using GameApplication.Models;
-using GameApplication.Services;
 
 namespace GameApplication
 {
@@ -38,8 +30,6 @@ namespace GameApplication
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -62,6 +52,7 @@ namespace GameApplication
             services.AddSignalR();
 
             services.AddSingleton<GameService>();
+            services.AddSingleton<GameSessionService>();
             services.AddSingleton<LobbyService>();
             services.AddSingleton<BattleshipSessionService>();
         }
@@ -96,6 +87,7 @@ namespace GameApplication
             app.UseSignalR(routes =>
             {
                 routes.MapHub<ChatRoom>("chat");
+                routes.MapHub<LobbyHub>("lobbyHub");
             });
         }
     }

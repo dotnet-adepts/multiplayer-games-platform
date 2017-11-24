@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameApplication.Factories;
+using GameApplication.Models.Games.Battleship;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameApplication.Models.Games
@@ -13,28 +15,21 @@ namespace GameApplication.Models.Games
         public int MinNumberOfPlayers { get; set; }
         public int MaxNumberOfPlayers { get; set; }
         public string Category { get; set; }
-        public string GameSessionControllerName { get; set; } 
+        public IGameSessionFactory GameSessionFactory;
 
-        public Game(string name, string desription, int minNumberOfPlayers, int maxNumberOfPlayers, string category, Type gameSessionController)
+        public Game(string name, string desription, int minNumberOfPlayers, int maxNumberOfPlayers, string category, IGameSessionFactory gameSessionFactory)
         {
             Name = name;
             Desription = desription;
             MinNumberOfPlayers = minNumberOfPlayers;
             MaxNumberOfPlayers = maxNumberOfPlayers;
             Category = category;
-            GameSessionControllerName = getControllerNameWithoutSuffix(gameSessionController.Name);
+            GameSessionFactory = gameSessionFactory;
         }
 
-        private string getControllerNameWithoutSuffix(string controllerName)
+        public IGameSession StartGameSession(long lobbyId, List<Player> players)
         {
-            var controllerSuffix = "Controller";
-            if (!controllerName.EndsWith(controllerSuffix))
-            {
-                throw new ArgumentException("'Controller' suffix was not found in " + controllerName);
-            }
-
-            int suffixIndex = controllerName.Length - controllerSuffix.Length;
-            return controllerName.Remove(suffixIndex);
+            return GameSessionFactory.Create(lobbyId, players);
         }
 
         public static class Names
@@ -43,5 +38,8 @@ namespace GameApplication.Models.Games
             public const string Battleship = "Statki";
         }
 
+
     }
+
+
 }
