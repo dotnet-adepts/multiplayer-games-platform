@@ -28,9 +28,11 @@
 @if (Model.ConnectedPlayers.Count() >= Model.Game.MinNumberOfPlayers)
 {
     @Html.ActionLink("Rozpoczniej gre (Gospodarz)", "StartGame", Model.Game.GameSessionControllerName, new {lobbyId = Model.Id})
-    <br //>
+    <br/>
     @Html.ActionLink("Dołącz do gry (Inni) - tymczasowy przycisk", "JoinGame", Model.Game.GameSessionControllerName, new {lobbyId = Model.Id})
 }
+
+
 
 
 <br/><br/>

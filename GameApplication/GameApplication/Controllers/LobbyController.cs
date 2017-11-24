@@ -62,5 +62,10 @@ namespace GameApplication.Controllers
             ViewData["full"] = full;
             return View("SingleLobby", lobby);
         }
+
+        public IActionResult Battleships()
+        {
+            return View();
+        }
     }
 }
