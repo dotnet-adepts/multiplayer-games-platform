@@ -13,6 +13,7 @@ namespace GameApplication.Models.Games.Battleship
         public Player PlayerOne;
         public Player PlayerTwo;
         //TODO: game state
+        public int Example = 0;
 
         public BattleshipSession(long id, Player playerOne, Player playerTwo)
         {
@@ -34,6 +35,11 @@ namespace GameApplication.Models.Games.Battleship
         public string GetJoinUrl()
         {
             return "/BattleshipSession/JoinGame?lobbyId=" + Id;
+        }
+
+        public void UpdateExample()
+        {
+            Example++;
         }
     }
 }

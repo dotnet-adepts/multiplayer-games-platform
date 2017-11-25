@@ -4,9 +4,18 @@
     ViewData["Title"] = "Statki";
 }
 
+<script>
+    $(document).ready(function() {
+        StartBattleshipGame(@Model.Id);
+    });
+</script>
+
 <h2>Statki</h2>
 <h3>@Model.PlayerOne.GetName() vs @Model.PlayerTwo.GetName()</h3>
 
+<p id="exampleValue"></p>
+
+<button id="updateExampleButton">UpdateExample</button>
 
 <br /><br />
 <h3 style="color:red">TODO - Logika gry i UI</h3>
