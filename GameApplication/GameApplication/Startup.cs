@@ -87,7 +87,7 @@ namespace GameApplication
             app.UseSignalR(routes =>
             {
                 routes.MapHub<ChatRoom>("chat");
-                routes.MapHub<LobbyHub>("lobbyHub");
+                routes.MapHub<SingleLobbyHub>("singleLobbyHub");
             });
         }
     }
