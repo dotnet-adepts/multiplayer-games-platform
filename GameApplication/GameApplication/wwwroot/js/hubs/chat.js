@@ -12,7 +12,7 @@ function startChat()
 {
     // Initialize the connection with singalr hub
     let transportType = signalR.TransportType.WebSockets;
-    let http = new signalR.HttpConnection(`http://${document.location.host}/chat`, { transport: transportType });
+    let http = new signalR.HttpConnection(location.protocol + `//${document.location.host}/chat`, { transport: transportType });
     let connection = new signalR.HubConnection(http);
     connection.start();
     connection.on('Send', (nick, message) => {
