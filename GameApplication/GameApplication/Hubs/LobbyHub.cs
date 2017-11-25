@@ -11,13 +11,13 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace GameApplication.Hubs
 {
-    public class SingleLobbyHub : Hub
+    public class LobbyHub : Hub
     {
         private readonly LobbyService _lobbyService;
         private readonly GameSessionService _gameSessionService;
 
 
-        public SingleLobbyHub(LobbyService lobbyService, GameSessionService gameSessionService)
+        public LobbyHub(LobbyService lobbyService, GameSessionService gameSessionService)
         {
             _lobbyService = lobbyService;
             _gameSessionService = gameSessionService;
