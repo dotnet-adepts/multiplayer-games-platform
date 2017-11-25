@@ -7,7 +7,10 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li>
-        <a class="mdl-navigation__link" href="@Url.Action("Index", "Manage")"  title="Manage">Twój profil</a>
+        <a class="mdl-navigation__link" href="@Url.Action("Index", "Manage")"  title="Manage" >Twój profil</a>
+    </li>
+    <li>
+        <a class="mdl-navigation__link" href="@Url.Action("ChangePassword", "Manage")" title="Manage">Zmieñ has³o</a>
     </li>
     <li>
         <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">

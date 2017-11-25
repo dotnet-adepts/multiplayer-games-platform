@@ -8,17 +8,14 @@ namespace GameApplication.Models.ManageViewModels
 {
     public class IndexViewModel
     {
+        [Display(Name = "Użytkownik")]
         public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Adres e-mail jest wymagany")]
         [EmailAddress]
         public string Email { get; set; }
-
-        [Phone]
-        [Display(Name = "Phone number")]
-        public string PhoneNumber { get; set; }
 
         public string StatusMessage { get; set; }
     }

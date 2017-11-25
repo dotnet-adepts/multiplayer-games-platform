@@ -25,14 +25,14 @@ namespace GameApplication.Hubs
 
         public async Task JoinLobby(long lobbyId, string gameName)
         {
+            Context.Connection.Metadata.Add("lobbyId", lobbyId);
+            Context.Connection.Metadata.Add("gameName", gameName);
             var player = GetLoggedPlayer();
             var lobby = _lobbyService.FindByIdAndGameName(lobbyId, gameName);
+            var groupName = GenerateGroupName(lobbyId, gameName);
             try
             {
                 lobby.AddPlayer(player);
-                Context.Connection.Metadata.Add("lobbyId", lobbyId);
-                Context.Connection.Metadata.Add("gameName", gameName);
-                var groupName = GenerateGroupName(lobbyId, gameName);
                 await Groups.AddAsync(Context.ConnectionId, groupName);
                 await Clients.Group(groupName).InvokeAsync("updatePlayers", ConvertPlayersToNames(lobby.ConnectedPlayers));
             }

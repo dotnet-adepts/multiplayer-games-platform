@@ -1,8 +1,6 @@
 ﻿
 function JoinLobby(lobbyId, gameName, minNumberOfPlayers) {
-    console.log('lid: ' + lobbyId);
-    console.log('gn: ' + gameName);
-    var hub = `http://${document.location.host}/singleLobbyHub`;
+    var hub = location.protocol + `//${document.location.host}/lobbyHub`;
     var http = new signalR.HttpConnection(hub, { transport: signalR.TransportType.WebSockets });
     var connection = new signalR.HubConnection(http);
     connection.start()
