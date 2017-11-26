@@ -33,6 +33,17 @@ namespace GameApplication.Hubs
             await Clients.Group(groupName).InvokeAsync("updateExampleValueInView", battleshipSession.Example);
         }
 
+        public async Task SetBoard(int sessionId, int[][] board)
+        {
+            var loggedPlayer = GetLoggedPlayer();
+            var battleshipSession = _battleshipSessionService.FindById(sessionId, loggedPlayer);
+            var myBoard = battleshipSession.GetMyBoard(loggedPlayer);
+            myBoard.SetBoard(board);
+
+            var groupName = MapSessionIdToGroupName(sessionId);
+            await Clients.Group(groupName).InvokeAsync("playerReady", loggedPlayer.GetName());
+        }
+
         public string MapSessionIdToGroupName(int sessionId)
         {
             return "group-" + sessionId;

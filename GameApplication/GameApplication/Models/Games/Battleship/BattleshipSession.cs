@@ -12,6 +12,8 @@ namespace GameApplication.Models.Games.Battleship
         public long Id;
         public Player PlayerOne;
         public Player PlayerTwo;
+        public Board PlayerOneBoard;
+        public Board PlayerTwoBoard;
         //TODO: game state
         public int Example = 0;
 
@@ -20,6 +22,8 @@ namespace GameApplication.Models.Games.Battleship
             Id = id;
             PlayerOne = playerOne;
             PlayerTwo = playerTwo;
+            PlayerOneBoard = new Board();
+            PlayerTwoBoard = new Board();
         }
 
         public long getId()
@@ -30,6 +34,14 @@ namespace GameApplication.Models.Games.Battleship
         public List<Player> GetPlayers()
         {
             return new List<Player>() { PlayerOne, PlayerTwo };
+        }
+
+        public Board GetMyBoard(Player player)
+        {
+            if (player == PlayerOne)
+                return PlayerOneBoard;
+            else
+                return PlayerTwoBoard;
         }
 
         public string GetJoinUrl()
