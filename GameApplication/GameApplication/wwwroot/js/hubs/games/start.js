@@ -13,6 +13,36 @@
         }
     );
 
+    connection.on('waitForOpponent',
+        () => {
+            //Wyswietlenie uzytkownikowi ze sutawil swoja plansze poprawnie teraz musi czekac na przeciwnika
+        }
+    );
+
+    connection.on('playersReady',
+        () => {
+            //przekierowanie uzytkownika do nastepnej strony juz gry wlasciwej
+        }
+    );
+
+    connection.on('tooManyShips',
+        (tooMany) => {
+            //wyswietlenie uzytkownikowi ze nie ustawil jeszcze wszystkich statkow lub ustawil ich za duzo
+        }
+    );
+
+    connection.on('badInput',
+        () => {
+            //wyslales jakas kupe na serwer, opanuj sie
+        }
+    );
+
+    connection.on('errorsInShipPlacement',
+        () => {
+            //wyswietlenie uzytkownikowi informacji ze niektore statki sie dotykaja
+        }
+    );
+
     $("#checkBoard").click(function () {
         connection.invoke('SetBoard', sessionId, startGameBoard);
     });
@@ -48,7 +78,7 @@ var startGameBoard = [
 
 var myText = "";
 var text = "";
-var placingMode = false;
+var placingMode = true;
 
 // make the grid columns and rows
 for (i = 0; i < cols; i++) {

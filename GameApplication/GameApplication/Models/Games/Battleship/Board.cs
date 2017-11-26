@@ -12,8 +12,8 @@ namespace GameApplication.Models.Games.Battleship
         private const int BOARD_SIZE = 10;
 
         private const int EMPTY_NOT_HIT = 0;
-        private const int EMPTY_HIT = 1;
-        private const int SHIP_NOT_HIT = 2;
+        private const int SHIP_NOT_HIT = 1;
+        private const int EMPTY_HIT = 2;
         private const int SHIP_DESTROYED = 3;
 
         #endregion
@@ -27,22 +27,24 @@ namespace GameApplication.Models.Games.Battleship
                 values[i] = new int[BOARD_SIZE];
         }
 
-        public bool ValidateBoard(int[][] board)
+        public BattleShipBoardStatus ValidateBoard(int[][] board)
         {
-            return board.Any(row => row.Any(val => val != EMPTY_NOT_HIT && val != SHIP_NOT_HIT));
-            /*
-            for (int i = 0; i < BOARD_SIZE; i++)
-                for (int j = 0; j < BOARD_SIZE; j++)
-                    if (board[i][j] != EMPTY_NOT_HIT && board[i][j] != SHIP_NOT_HIT)
-                        return false;
-            return true;
-            */
-            //TODO BETTER VALIDATION
+            if (board.Any(row => row.Any(val => val != EMPTY_NOT_HIT && val != SHIP_NOT_HIT)))
+                return BattleShipBoardStatus.WrongValues;
+            //else if (board.Sum(row => row.Sum()) > 20)
+            //    return BattleShipBoardStatus.TooManyShips;
+            //else if (board.Sum(row => row.Sum()) < 20)
+            //    return BattleShipBoardStatus.TooFewShips;
+            // else if trudna walidacja stykania sie
+            return BattleShipBoardStatus.BoardOK;
         }
 
-        public void SetBoard(int[][] board)
+        public BattleShipBoardStatus SetBoard(int[][] board)
         {
-            values = board.Select(x => x.ToArray()).ToArray();
+            var boardstatus = ValidateBoard(board);
+            if(boardstatus == BattleShipBoardStatus.BoardOK)
+                values = board.Select(x => x.ToArray()).ToArray();
+            return boardstatus;
         }
 
         public int Cannonry(int x, int y)

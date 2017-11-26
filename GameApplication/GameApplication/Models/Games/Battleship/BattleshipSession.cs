@@ -10,20 +10,16 @@ namespace GameApplication.Models.Games.Battleship
     public class BattleshipSession : IGameSession
     {
         public long Id;
-        public Player PlayerOne;
-        public Player PlayerTwo;
-        public Board PlayerOneBoard;
-        public Board PlayerTwoBoard;
+        public BattleshipPlayer PlayerOne;
+        public BattleshipPlayer PlayerTwo;
         //TODO: game state
         public int Example = 0;
 
         public BattleshipSession(long id, Player playerOne, Player playerTwo)
         {
             Id = id;
-            PlayerOne = playerOne;
-            PlayerTwo = playerTwo;
-            PlayerOneBoard = new Board();
-            PlayerTwoBoard = new Board();
+            PlayerOne = new BattleshipPlayer(playerOne.Principal);
+            PlayerTwo = new BattleshipPlayer(playerTwo.Principal);
         }
 
         public long getId()
@@ -33,15 +29,38 @@ namespace GameApplication.Models.Games.Battleship
 
         public List<Player> GetPlayers()
         {
-            return new List<Player>() { PlayerOne, PlayerTwo };
+            return new List<Player>() { new Player(PlayerOne.Principal), new Player(PlayerTwo.Principal) };
         }
 
-        public Board GetMyBoard(Player player)
+        public BattleShipBoardStatus SetBoard(BattleshipPlayer player, int[][] board)
+        {
+            return GetCurrentPlayer(player).Board.SetBoard(board);
+        }
+
+        public void SetPlayerReady(BattleshipPlayer player)
+        {
+            GetCurrentPlayer(player).SetToReady();
+        }
+
+        public Board GetMyBoard(BattleshipPlayer player)
         {
             if (player == PlayerOne)
-                return PlayerOneBoard;
+                return PlayerOne.Board;
             else
-                return PlayerTwoBoard;
+                return PlayerTwo.Board;
+        }
+
+        public BattleshipPlayer GetCurrentPlayer(BattleshipPlayer player)
+        {
+            if (PlayerOne == player)
+                return PlayerOne;
+            else
+                return PlayerTwo;
+        }
+
+        public bool ReadyToStart()
+        {
+            return PlayerOne.Ready && PlayerTwo.Ready;
         }
 
         public string GetJoinUrl()
