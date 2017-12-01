@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace GameApplication.Models.Games.Battleship
 {
@@ -27,43 +24,55 @@ namespace GameApplication.Models.Games.Battleship
                 values[i] = new int[BOARD_SIZE];
         }
 
-        public BattleShipBoardStatus ValidateBoard(int[][] board)
+        public int[][] GetBoard()
+        {
+            return values;
+        }
+
+        public BattleshipBoardStatus ValidateBoard(int[][] board)
         {
             if (board.Any(row => row.Any(val => val != EMPTY_NOT_HIT && val != SHIP_NOT_HIT)))
-                return BattleShipBoardStatus.WrongValues;
+                return BattleshipBoardStatus.WrongValues;
             //else if (board.Sum(row => row.Sum()) > 20)
             //    return BattleShipBoardStatus.TooManyShips;
             //else if (board.Sum(row => row.Sum()) < 20)
             //    return BattleShipBoardStatus.TooFewShips;
             // else if trudna walidacja stykania sie
-            return BattleShipBoardStatus.BoardOK;
+            return BattleshipBoardStatus.BoardOK;
         }
 
-        public BattleShipBoardStatus SetBoard(int[][] board)
+        public BattleshipBoardStatus SetBoard(int[][] board)
         {
             var boardstatus = ValidateBoard(board);
-            if(boardstatus == BattleShipBoardStatus.BoardOK)
+            if(boardstatus == BattleshipBoardStatus.BoardOK)
                 values = board.Select(x => x.ToArray()).ToArray();
             return boardstatus;
         }
 
-        public int Cannonry(int x, int y)
+        public BattleshipMoveStatus Cannonry(int x, int y)
         {
             switch (values[x][y])
             {
                 case EMPTY_NOT_HIT:
                     values[x][y] = EMPTY_HIT;
-                    return 0;
+                    return BattleshipMoveStatus.ShipMiss;
                 case EMPTY_HIT:
-                    return -1;
+                    return BattleshipMoveStatus.WrongMove;
                 case SHIP_NOT_HIT:
                     values[x][y] = SHIP_DESTROYED;
-                    return 1;
+                    if(IsGameOver())
+                        return BattleshipMoveStatus.GameOver;
+                    else
+                        return BattleshipMoveStatus.ShipDown;
                 case SHIP_DESTROYED:
-                    return -1;
                 default:
-                    return -1;
+                    return BattleshipMoveStatus.WrongMove;
             }
+        }
+
+        private bool IsGameOver()
+        {
+            return !values.Any(row => row.Any(val => val == SHIP_NOT_HIT));
         }
     }
 }

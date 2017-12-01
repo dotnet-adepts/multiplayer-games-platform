@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 
 namespace GameApplication.Models.Games.Battleship
 {
@@ -22,10 +18,19 @@ namespace GameApplication.Models.Games.Battleship
             Ready = true;
         }
 
+        public void SetToNotReady()
+        {
+            Ready = false;
+        }
+
         public Player GetAsPlayer()
         {
             return new Player(this.Principal);
         }
 
+        public void ChangeTurn()
+        {
+            Ready = Ready ? false : true;
+        }
     }
 }
