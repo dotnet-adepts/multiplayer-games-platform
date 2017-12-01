@@ -28,13 +28,19 @@
                 <div id="myGameBoard"></div>
             </div>
             <div class="grid-container">
-                <div ng-if="!placingMode" class="startButtons">
-                    <button onclick="changePlacingMode()">Postaw statek</button>
+                <div>
+                    <p>
+                        Stwórz swoje ustawienie statków!<br />
+                        Ustawienie powinno zawierać:<br />
+                        1x czteropoziomowy<br />
+                        2x trzypoziomowe<br />
+                        3x dwupoziomowe<br />
+                        4x jednopoziomowe<br />
+                        Statki nie mogą się stykać (nawet na rogach)!
+                    </p>
                 </div>
-                <div ng-if="placingMode" class="startButtons">
-                    <button onclick="changePlacingMode()">Zapisz</button>
-                </div>
-                @Html.ActionLink("Gotowe", "Battleships", "Lobby", new { }, null)
+                <p id="errorMessage"></p>
+                <button id="checkBoard">Gotowe</button>
             </div>
         </div>
     </div>

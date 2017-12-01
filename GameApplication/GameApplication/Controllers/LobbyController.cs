@@ -38,6 +38,9 @@ namespace GameApplication.Controllers
             ViewData["loggedUser"] = User.Identity.Name;
             return View("SingleLobby", lobby);
         }
-
+        public IActionResult Battleships()
+        {
+            return View("Battleships");
+        }
     }
 }

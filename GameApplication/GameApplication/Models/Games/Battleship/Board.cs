@@ -31,11 +31,11 @@ namespace GameApplication.Models.Games.Battleship
         {
             if (board.Any(row => row.Any(val => val != EMPTY_NOT_HIT && val != SHIP_NOT_HIT)))
                 return BattleShipBoardStatus.WrongValues;
-            //else if (board.Sum(row => row.Sum()) > 20)
-            //    return BattleShipBoardStatus.TooManyShips;
-            //else if (board.Sum(row => row.Sum()) < 20)
-            //    return BattleShipBoardStatus.TooFewShips;
-            // else if trudna walidacja stykania sie
+            else if (board.Sum(row => row.Sum()) > 20)
+                return BattleShipBoardStatus.TooManyShips;
+            else if (board.Sum(row => row.Sum()) < 20)
+                return BattleShipBoardStatus.TooFewShips;
+            //else if trudna walidacja stykania sie
             return BattleShipBoardStatus.BoardOK;
         }
 
