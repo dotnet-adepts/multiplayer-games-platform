@@ -1,11 +1,9 @@
-using System;
-using System.Threading.Tasks;
-using GameApplication.Exceptions;
-using GameApplication.Models.Games;
+using GameApplication.Models.Games.Battleship;
 using GameApplication.Services.GamesSessions;
 using Microsoft.AspNetCore.SignalR;
-using GameApplication.Models.Games.Battleship;
-using BoardStatus = GameApplication.Models.Games.Battleship.BattleShipBoardStatus;
+using System.Threading.Tasks;
+using BoardStatus = GameApplication.Models.Games.Battleship.BattleshipBoardStatus;
+using MoveStatus = GameApplication.Models.Games.Battleship.BattleshipMoveStatus;
 
 namespace GameApplication.Hubs
 {
@@ -18,22 +16,11 @@ namespace GameApplication.Hubs
             _battleshipSessionService = battleshipSessionService;
         }
 
-
         public async Task JoinGame(int sessionId)
         {
             var loggedPlayer = GetLoggedPlayer();
             var groupName = MapSessionIdToGroupName(sessionId);
             await Groups.AddAsync(Context.ConnectionId, groupName);
-        }
-
-        public async Task UpdateExample(int sessionId)
-        {
-            var loggedPlayer = GetLoggedPlayer();
-            var battleshipSession = _battleshipSessionService.FindById(sessionId, loggedPlayer);
-            battleshipSession.UpdateExample();
-
-            var groupName = MapSessionIdToGroupName(sessionId);
-            await Clients.Group(groupName).InvokeAsync("updateExampleValueInView", battleshipSession.Example);
         }
 
         public async Task SetBoard(int sessionId, int[][] board)
@@ -47,7 +34,7 @@ namespace GameApplication.Hubs
                     if (battleshipSession.ReadyToStart())
                     {
                         var groupName = MapSessionIdToGroupName(sessionId);
-                        await Clients.Group(groupName).InvokeAsync("playersReady");
+                        await Clients.Group(groupName).InvokeAsync("playersReady", battleshipSession.GetGameUrl());
                     }
                     else
                         await Clients.Client(Context.ConnectionId).InvokeAsync("waitForOpponent");
@@ -67,15 +54,59 @@ namespace GameApplication.Hubs
             }
         }
 
-        public string MapSessionIdToGroupName(int sessionId)
+        public async Task GetBoard(int sessionId)
+        {
+            var loggedPlayer = GetLoggedPlayer();
+            var battleshipSession = _battleshipSessionService.FindById(sessionId, loggedPlayer.GetAsPlayer());
+            var board = battleshipSession.GetPlayerBoard(loggedPlayer);
+            await Clients.Client(Context.ConnectionId).InvokeAsync("playerBoard", board.GetBoard());
+        }
+
+        public async Task IsItMyTurn(int sessionId)
+        {
+            var loggedPlayer = GetLoggedPlayer();
+            var battleshipSession = _battleshipSessionService.FindById(sessionId, loggedPlayer.GetAsPlayer());
+
+            if(battleshipSession.IsPlayerMove(loggedPlayer))
+                await Clients.Client(Context.ConnectionId).InvokeAsync("yourTurn");
+            else
+                await Clients.Client(Context.ConnectionId).InvokeAsync("waitForOpponent");
+        }
+
+        public async Task Move(int sessionId, int x, int y)
+        {
+            var loggedPlayer = GetLoggedPlayer();
+            var battleshipSession = _battleshipSessionService.FindById(sessionId, loggedPlayer.GetAsPlayer());
+            if (battleshipSession.IsPlayerMove(loggedPlayer))
+            {
+                var groupName = MapSessionIdToGroupName(sessionId);
+                switch (battleshipSession.Move(loggedPlayer, x, y))
+                {  
+                    case MoveStatus.ShipDown:
+                        await Clients.Group(groupName).InvokeAsync("shipDown", x, y);
+                        break;
+                    case MoveStatus.ShipMiss:
+                        await Clients.Group(groupName).InvokeAsync("shipMiss", x, y);
+                        break;
+                    case MoveStatus.GameOver:
+                        await Clients.Group(groupName).InvokeAsync("gameOver", x, y);
+                        break;
+                }
+            }
+            else
+            {
+                await Clients.Client(Context.ConnectionId).InvokeAsync("notYourTurn");
+            }
+        }
+
+        private string MapSessionIdToGroupName(int sessionId)
         {
             return "group-" + sessionId;
         }
 
-        public BattleshipPlayer GetLoggedPlayer()
+        private BattleshipPlayer GetLoggedPlayer()
         {
             return new BattleshipPlayer(Context.User);
         }
-
     }
 }

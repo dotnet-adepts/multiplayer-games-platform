@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using System.Security.Principal;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Routing;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GameApplication.Models.Games.Battleship
 {
@@ -12,8 +8,6 @@ namespace GameApplication.Models.Games.Battleship
         public long Id;
         public BattleshipPlayer PlayerOne;
         public BattleshipPlayer PlayerTwo;
-        //TODO: game state
-        public int Example = 0;
 
         public BattleshipSession(long id, Player playerOne, Player playerTwo)
         {
@@ -32,7 +26,7 @@ namespace GameApplication.Models.Games.Battleship
             return new List<Player>() { new Player(PlayerOne.Principal), new Player(PlayerTwo.Principal) };
         }
 
-        public BattleShipBoardStatus SetBoard(BattleshipPlayer player, int[][] board)
+        public BattleshipBoardStatus SetBoard(BattleshipPlayer player, int[][] board)
         {
             return GetCurrentPlayer(player).Board.SetBoard(board);
         }
@@ -42,7 +36,7 @@ namespace GameApplication.Models.Games.Battleship
             GetCurrentPlayer(player).SetToReady();
         }
 
-        public Board GetMyBoard(BattleshipPlayer player)
+        public Board GetPlayerBoard(BattleshipPlayer player)
         {
             if (player == PlayerOne)
                 return PlayerOne.Board;
@@ -60,7 +54,13 @@ namespace GameApplication.Models.Games.Battleship
 
         public bool ReadyToStart()
         {
-            return PlayerOne.Ready && PlayerTwo.Ready;
+            if (PlayerOne.Ready && PlayerTwo.Ready)
+            {
+                ChoosePlayerToStart();
+                return true;
+            }
+            else
+                return false;
         }
 
         public string GetJoinUrl()
@@ -68,9 +68,47 @@ namespace GameApplication.Models.Games.Battleship
             return "/BattleshipSession/JoinGame?lobbyId=" + Id;
         }
 
-        public void UpdateExample()
+        public string GetGameUrl()
         {
-            Example++;
+            return "/BattleshipSession/Game?lobbyId=" + Id;
+        }
+
+        public bool IsPlayerMove(BattleshipPlayer player)
+        {
+            return GetCurrentPlayer(player).Ready;
+        }
+
+        public BattleshipMoveStatus Move(BattleshipPlayer player, int x, int y)
+        {
+            var status = GetCurrentPlayer(player).Board.Cannonry(x, y);
+            switch (status)
+            {
+                case BattleshipMoveStatus.ShipDown:
+                case BattleshipMoveStatus.ShipMiss:
+                case BattleshipMoveStatus.GameOver:
+                    ChangePlayerTurn();
+                    return status;
+                default:
+                    return status;
+            }
+        }
+
+        private void ChangePlayerTurn()
+        {
+            PlayerOne.ChangeTurn();
+            PlayerTwo.ChangeTurn();
+        }
+
+        private void ChoosePlayerToStart()
+        {
+            PlayerOne.SetToNotReady();
+            PlayerTwo.SetToNotReady();
+
+            Random random = new Random();
+            if (random.Next() % 2 == 1)
+                PlayerOne.ChangeTurn();
+            else
+                PlayerTwo.ChangeTurn();
         }
     }
 }
