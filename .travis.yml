@@ -14,3 +14,8 @@ before_install:
 - docker pull microsoft/aspnetcore:2.0.0
 - docker pull microsoft/aspnetcore-build:2.0.0
 - docker build -t local/app .
+
+after_success:
+- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" registry.heroku.com
+- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+- docker push $DOCKER_USERNAME/registry.heroku.com
