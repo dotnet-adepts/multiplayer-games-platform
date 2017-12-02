@@ -5,10 +5,12 @@ language: csharp
 services:
   - docker
 
+addons:
+  apt:
+    packages:
+      - docker-ce
+
 before_install:
-- sudo apt-get update
-- sudo apt-get purge lxc-docker*
-- sudo apt-get install docker-engine
 - docker pull microsoft/aspnetcore:2.0.0
 - docker pull microsoft/aspnetcore-build:2.0.0
 - docker build -t local/app .
