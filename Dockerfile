@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore-build:2.0.0
+FROM microsoft/aspnetcore-build:2.0.0 AS build
 
 WORKDIR /code
 
@@ -11,8 +11,8 @@ RUN dotnet publish --output /output --configuration Release
 
 FROM microsoft/aspnetcore:2.0.0
 
-COPY --from=microsoft/aspnetcore-build:2.0.0 /output /app
+COPY --from=build /output /app
 
 WORKDIR /app
 
-ENTRYPOINT ["dotnet", "DockerDemo.dll"]
+ENTRYPOINT ["dotnet", "GameApplication.dll"]
