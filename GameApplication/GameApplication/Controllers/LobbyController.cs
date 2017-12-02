@@ -38,9 +38,32 @@ namespace GameApplication.Controllers
             ViewData["loggedUser"] = User.Identity.Name;
             return View("SingleLobby", lobby);
         }
-        public IActionResult Battleships()
+
+        public ActionResult RefreshLobbiesList(string gameName)
         {
-            return View("Battleships");
+            var lobbies = _lobbyService.FindAllByGameName(gameName);
+
+            return Json(LobbyResponse.Create(lobbies));
+        }
+
+        private class LobbyResponse
+        {
+            public long Id;
+            public string Owner;
+            public int NumberOfConnectedPlayers;
+
+            private LobbyResponse(Lobby lobby)
+            {
+                Id = lobby.Id;
+                Owner = lobby.Owner.GetName();
+                NumberOfConnectedPlayers = lobby.GetNumberOfConnectedPlayers();
+            }
+
+            public static List<LobbyResponse> Create(IEnumerable<Lobby> lobbies)
+            {
+                return lobbies.Select(lobby => new LobbyResponse(lobby)).ToList();
+            }
+
         }
     }
 }
