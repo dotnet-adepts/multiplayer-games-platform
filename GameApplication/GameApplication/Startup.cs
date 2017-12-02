@@ -88,6 +88,7 @@ namespace GameApplication
             {
                 routes.MapHub<ChatRoom>("chat");
                 routes.MapHub<LobbyHub>("lobbyHub");
+                routes.MapHub<BattleshipHub>("battleshipHub");
             });
         }
     }

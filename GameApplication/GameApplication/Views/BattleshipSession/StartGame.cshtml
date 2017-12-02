@@ -4,9 +4,50 @@
     ViewData["Title"] = "Statki";
 }
 
+<script>
+    $(document).ready(function() {
+        StartBattleshipGame(@Model.Id);
+    });
+</script>
+
 <h2>Statki</h2>
 <h3>@Model.PlayerOne.GetName() vs @Model.PlayerTwo.GetName()</h3>
 
+<head>
+    <meta charset="UTF-8">
+    <title>Rozstaw swoje statki</title>
+    <link rel="stylesheet" type="text/css" href="~/css/battleships.css">
+</head>
+<body>
+    <div class="mainContainer">
+        <div id="gameboardsContainer" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="grid-container">
+                <h5>Twoja plansza</h5>
+                <div id="myNumeration"></div>
+                <div id="numeration"></div>
+                <div id="myGameBoard"></div>
+            </div>
+            <div class="grid-container">
+                <div ng-if="!placingMode" class="startButtons">
+                    <button onclick="changePlacingMode()">Postaw statek</button>
+                </div>
+                <div ng-if="placingMode" class="startButtons">
+                    <button onclick="changePlacingMode()">Zapisz</button>
+                </div>
+                @Html.ActionLink("Gotowe", "Battleships", "Lobby", new { }, null)
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script type="text/javascript" src="~/js/hubs/games/start.js"></script>
+</body>
+
+
+
+@*<p id="exampleValue"></p>
+<button id="updateExampleButton">UpdateExample</button>*@
+<button id="checkBoard">Gotowe</button>
+<p id="errorMessage"></p>
 
 <br /><br />
 <h3 style="color:red">TODO - Logika gry i UI</h3>
