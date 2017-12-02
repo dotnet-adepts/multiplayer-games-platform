@@ -94,10 +94,11 @@ namespace GameApplication.Models.Games.Battleship
             var status = GetOppositePlayer(player).Board.Cannonry(opponentBoard, x, y);
             switch (status)
             {
-                case BattleshipMoveStatus.ShipDown:
                 case BattleshipMoveStatus.ShipMiss:
-                case BattleshipMoveStatus.GameOver:
                     ChangePlayerTurn();
+                    return status;
+                case BattleshipMoveStatus.ShipDown:
+                case BattleshipMoveStatus.GameOver:
                     return status;
                 default:
                     return status;
