@@ -1,0 +1,42 @@
+﻿@model GameApplication.Models.Games.Battleship.BattleshipSession
+
+@{
+    ViewData["Title"] = "Statki";
+}
+
+<script>
+    $(document).ready(function() {
+        StartBattleshipGame(@Model.Id);
+    });
+</script>
+
+<html>
+<head>
+    <title>Statki</title>
+    <link rel="stylesheet" type="text/css" href="~/css/battleships.css">
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Statki</h1>
+    <p>Postaraj się zatopić wszystkie statki przeciwnika!</p>
+    <div class="mainContainer">
+        <div id="gameboardsContainer">
+            <div class="grid-container">
+                <h5>Twoja plansza</h5>
+                <div id="myNumeration"></div>
+                <div id="numeration"></div>
+                <div id="myGameBoard"></div>
+            </div>
+            <div class="grid-container">
+                <h5>Plansza przeciwnika</h5>
+                <div id="myShootingNumeration"></div>
+                <div id="shootingNumeration"></div>
+                <div id="shootingGameBoard"></div>
+            </div>
+        </div>        
+    </div>
+    <p></p>
+    <script type="text/javascript" src="~/js/hubs/games/battleship.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</body>
+</html>
