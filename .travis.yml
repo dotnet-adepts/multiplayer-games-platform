@@ -17,4 +17,4 @@ before_install:
 
 script:
 - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" registry.heroku.com
-- docker push "$DOCKER_USERNAME"/registry.heroku.com
+- docker push registry.heroku.com/GameApplication/Release
