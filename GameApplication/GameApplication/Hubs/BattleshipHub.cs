@@ -54,12 +54,20 @@ namespace GameApplication.Hubs
             }
         }
 
-        public async Task GetBoard(int sessionId)
+        public async Task GetMyBoard(int sessionId)
         {
             var loggedPlayer = GetLoggedPlayer();
             var battleshipSession = _battleshipSessionService.FindById(sessionId, loggedPlayer.GetAsPlayer());
             var board = battleshipSession.GetPlayerBoard(loggedPlayer);
             await Clients.Client(Context.ConnectionId).InvokeAsync("playerBoard", board.GetBoard());
+        }
+
+        public async Task GetOpponentBoard(int sessionId)
+        {
+            var loggedPlayer = GetLoggedPlayer();
+            var battleshipSession = _battleshipSessionService.FindById(sessionId, loggedPlayer.GetAsPlayer());
+            var board = battleshipSession.GetOpponentBoard(loggedPlayer);
+            await Clients.Client(Context.ConnectionId).InvokeAsync("opponentBoard", board.GetBoard());
         }
 
         public async Task IsItMyTurn(int sessionId)
@@ -83,13 +91,13 @@ namespace GameApplication.Hubs
                 switch (battleshipSession.Move(loggedPlayer, x, y))
                 {  
                     case MoveStatus.ShipDown:
-                        await Clients.Group(groupName).InvokeAsync("shipDown", x, y);
+                        await Clients.Group(groupName).InvokeAsync("shipDown", new int[] { x, y });
                         break;
                     case MoveStatus.ShipMiss:
-                        await Clients.Group(groupName).InvokeAsync("shipMiss", x, y);
+                        await Clients.Group(groupName).InvokeAsync("shipMiss", new int[] { x, y });
                         break;
                     case MoveStatus.GameOver:
-                        await Clients.Group(groupName).InvokeAsync("gameOver", x, y);
+                        await Clients.Group(groupName).InvokeAsync("gameOver", new int[] { x, y });
                         break;
                 }
             }

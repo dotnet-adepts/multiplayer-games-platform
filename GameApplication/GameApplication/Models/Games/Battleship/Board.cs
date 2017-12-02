@@ -24,9 +24,13 @@ namespace GameApplication.Models.Games.Battleship
                 values[i] = new int[BOARD_SIZE];
         }
 
-        public int[][] GetBoard()
+        public int[,] GetBoard()
         {
-            return values;
+            var tmp = new int[10, 10];
+            for (int i = 0; i < 10; i++)
+                for (int j = 0; j < 10; j++)
+                    tmp[i, j] = values[i][j];
+            return tmp;
         }
 
         public BattleshipBoardStatus ValidateBoard(int[][] board)
@@ -49,16 +53,18 @@ namespace GameApplication.Models.Games.Battleship
             return boardstatus;
         }
 
-        public BattleshipMoveStatus Cannonry(int x, int y)
+        public BattleshipMoveStatus Cannonry(Board opponent, int x, int y)
         {
             switch (values[x][y])
             {
                 case EMPTY_NOT_HIT:
+                    opponent.values[x][y] = EMPTY_HIT;
                     values[x][y] = EMPTY_HIT;
                     return BattleshipMoveStatus.ShipMiss;
                 case EMPTY_HIT:
                     return BattleshipMoveStatus.WrongMove;
                 case SHIP_NOT_HIT:
+                    opponent.values[x][y] = SHIP_DESTROYED;
                     values[x][y] = SHIP_DESTROYED;
                     if (IsGameOver())
                         return BattleshipMoveStatus.GameOver;

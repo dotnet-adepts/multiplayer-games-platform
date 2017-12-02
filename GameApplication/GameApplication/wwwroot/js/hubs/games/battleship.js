@@ -1,193 +1,240 @@
-﻿////function StartBattleshipGame(sessionId) {
-////    var hub = location.protocol + `//${document.location.host}/battleshipHub`;
-////    var http = new signalR.HttpConnection(hub, { transport: signalR.TransportType.WebSockets });
-////    var connection = new signalR.HubConnection(http);
+﻿function StartBattleshipGame(sessionId) {
+    hub = location.protocol + `//${document.location.host}/battleshipHub`;
+    http = new signalR.HttpConnection(hub, { transport: signalR.TransportType.WebSockets });
+    connection = new signalR.HubConnection(http);
+    mySessionId = sessionId;
+    connection.start()
+        .then(() => connection.invoke('JoinGame', sessionId))
+        .then(() => connection.invoke('GetMyBoard', sessionId))
+        .then(() => connection.invoke('GetOpponentBoard', sessionId))
+        .then(() => connection.invoke('IsItMyTurn', sessionId)); //wywoływane w trakcie tworzenia połączenia
 
-////    connection.start()
-////        .then(() => connection.invoke('JoinGame', sessionId)); //wywoływane w trakcie tworzenia połączenia
+    connection.on('updateExampleValueInView', //obsługa wywołania serwer -> klient
+        (newValue) => {
+            console.log('New value ' + newValue);
+            $("#exampleValue").html(newValue);
+        }
+    );
 
-////    connection.on('updateExampleValueInView', //obsługa wywołania serwer -> klient
-////        (newValue) => {
-////            console.log('New value ' + newValue);
-////            $("#exampleValue").html(newValue);
-////        }
-////    );
+    connection.on('playerBoard',
+        (board) => {
+            myGameBoard = board;
+        }
+    );
+    connection.on('opponentBoard',
+        (board) => {
+            shootingGameBoard = board;
+            refresh();
+        }
+    );
 
-////    $("checkBoard").click(function () {
-////        connection.invoke('SetBoard', sessionId, startGameBoard);
-////    });
+    connection.on('yourTurn',
+        () => {
+            document.getElementsByTagName("p")[1].innerHTML = "Twoja tura";
+            myTurn = true;
+        }
+    );
 
-////    $("#updateExampleButton").click(function () {
-////        connection.invoke('UpdateExample', sessionId); // wywołanie klient -> serwer
-////    });
-////}
+    connection.on('waitForOpponent',
+        () => {
+            document.getElementsByTagName("p")[1].innerHTML = "Tura przeciwnika";
+            myTurn = false;
+        }
+    );
 
-//// set grid rows and columns and the size of each square
-//var rows = 10;
-//var cols = 10;
-//var squareSize = 30;
+    connection.on('shipDown',
+        (point) => {
+            checkFire(SHIP_DESTROYED, point[0], point[1]);
+            changeTurn()
+        }
+    );
 
-//// get the container element
-//var shootingGameBoardContainer = document.getElementById("shootingGameBoard");
-//var myGameBoardContainer = document.getElementById("myGameBoard");
+    connection.on('shipMiss',
+        (point) => {
+            checkFire(EMPTY_HIT, point[0], point[1]);
+            changeTurn()
+        }
+    );
 
-///* create the 2d array that will contain the status of each square on the board
-//   and place ships on the board (later, create function for random placement!)
+    connection.on('gameOver',
+        (point) => {
+            checkFire(SHIP_DESTROYED, point[0], point[1]);
+            //GAAAAAME OOOVER check whose turn it is  :D
+        }
+    );
 
-//   0 = empty, 1 = part of a ship, 2 = a sunken part of a ship, 3 = a missed shot
-//*/
+    $("checkBoard").click(function () {
+        connection.invoke('SetBoard', sessionId, startGameBoard);
+    });
 
-// var myGameBoard = [
-// 						[0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-// 						[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-// 						[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-// 						[0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-// 						[0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-// 						[1, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-// 						[1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-// 						[1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-// 						[1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-// 						[1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-// ];
+    $("#updateExampleButton").click(function () {
+        connection.invoke('UpdateExample', sessionId); // wywołanie klient -> serwer
+    });
+}
 
-////var myGameBoard = startGameBoard;
-//var shootingGameBoard = [
-//    [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-//    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-//    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-//    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-//    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-//    [1, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-//    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-//    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-//    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-//    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-//];
+var rows = 10;
+var cols = 10;
+var squareSize = 30;
 
-//var myText = "";
-//var text = "";
-//var myShootingText = "";
-//var shootingText = "";
-
-//// make the grid columns and rows
-//for (i = 0; i < cols; i++) {
-//    for (j = 0; j < rows; j++) {
-
-//        if (i == 0 && j == 0) {
-//            var myNumeration = document.createElement("div")
-//            var numeration = document.createElement("div");
-//            myGameBoardContainer.appendChild(myNumeration);
-//            myGameBoardContainer.appendChild(numeration);
-//            for (k = 0; k < 10; k++) {
-//                myText += '<p3>' + k + '</p3>';
-//                text += '<p4>' + String.fromCharCode(97 + k).toUpperCase() + '</p4></br>';
-//            }
-//            document.getElementById("myNumeration").innerHTML = myText;
-//            document.getElementById("numeration").innerHTML = text;
-//        }
+var shootingGameBoardContainer = document.getElementById("shootingGameBoard");
+var myGameBoardContainer = document.getElementById("myGameBoard");
+var myTurn = false;
+var EMPTY_NOT_HIT = 0;
+var SHIP_NOT_HIT = 1;
+var EMPTY_HIT = 2;
+var SHIP_DESTROYED = 3;
 
 
-//        // create a new div HTML element for each grid square and make it the right size
-//        var mySquare = document.createElement("div");
-//        myGameBoardContainer.appendChild(mySquare);
-
-//        // give each div element a unique id based on its row and column, like "s00"
-//        mySquare.id = 's' + j + i;
-
-//        // set each grid square's coordinates: multiples of the current row or column number
-//        var topPosition = j * squareSize;
-//        var leftPosition = i * squareSize;
-
-//        // use CSS absolute positioning to place each grid square on the page
-//        mySquare.style.top = topPosition + 'px';
-//        mySquare.style.left = leftPosition + 'px';
+ var myGameBoard = [
+ 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+ 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+ ];
 
 
+var shootingGameBoard = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
 
-//        if (myGameBoard[j][i] == 0) {
-//            mySquare.style.background = '#bbb';
-//        } else if (myGameBoard[j][i] == 1) {
-//            mySquare.style.background = '#0066ff';
-//        }
-//    }
-//}
-//// myGameBoardContainer.disabled = true;
+var myText = "";
+var text = "";
+var myShootingText = "";
+var shootingText = "";
 
-//// make the grid columns and rows
-//for (i = 0; i < cols; i++) {
-//    for (j = 0; j < rows; j++) {
+function refresh() {
+    for (i = 0; i < cols; i++) {
+        for (j = 0; j < rows; j++) {
 
-//        if (i == 0 && j == 0) {
-//            var myShootingNumeration = document.createElement("div")
-//            var shootingNumeration = document.createElement("div");
-//            myGameBoardContainer.appendChild(myShootingNumeration);
-//            myGameBoardContainer.appendChild(shootingNumeration);
-//            for (k = 0; k < 10; k++) {
-//                myShootingText += '<p3>' + k + '</p3>';
-//                shootingText += '<p4>' + String.fromCharCode(97 + k).toUpperCase() + '</p4></br>';
-//            }
-//            document.getElementById("myShootingNumeration").innerHTML = myShootingText;
-//            document.getElementById("shootingNumeration").innerHTML = shootingText;
-//        }
+            if (i == 0 && j == 0) {
+                var myNumeration = document.createElement("div");
+                var numeration = document.createElement("div");
+                myGameBoardContainer.appendChild(myNumeration);
+                myGameBoardContainer.appendChild(numeration);
+                for (k = 0; k < 10; k++) {
+                    myText += '<p3>' + k + '</p3>';
+                    text += '<p4>' + String.fromCharCode(97 + k).toUpperCase() + '</p4></br>';
+                }
+                document.getElementById("myNumeration").innerHTML = myText;
+                document.getElementById("numeration").innerHTML = text;
+            }
 
+            var mySquare = document.createElement("div");
+            myGameBoardContainer.appendChild(mySquare);
 
-//        // create a new div HTML element for each grid square and make it the right size
-//        var square = document.createElement("div");
-//        shootingGameBoardContainer.appendChild(square);
+            mySquare.id = 's' + j + i;
 
-//        // give each div element a unique id based on its row and column, like "s00"
-//        square.id = 'e' + j + i;
+            var topPosition = j * squareSize;
+            var leftPosition = i * squareSize;
 
-//        // set each grid square's coordinates: multiples of the current row or column number
-//        var topPosition = j * squareSize;
-//        var leftPosition = i * squareSize;
+            mySquare.style.top = topPosition + 'px';
+            mySquare.style.left = leftPosition + 'px';
 
-//        // use CSS absolute positioning to place each grid square on the page
-//        square.style.top = topPosition + 'px';
-//        square.style.left = leftPosition + 'px';
-//    }
-//}
+            if (myGameBoard[j][i] == EMPTY_HIT) {
+                mySquare.style.background = '#fff';
+            } else if (myGameBoard[j][i] == SHIP_NOT_HIT) {
+                mySquare.style.background = '#0066ff';
+            } else if (myGameBoard[j][i] == SHIP_DESTROYED) {
+                mySquare.style.background = '#CC0000';
+            } else if (myGameBoard[j][i] == EMPTY_NOT_HIT) {
+                mySquare.style.background = '#CCCCCC';
+            }
+        }
+    }
+    
+    for (i = 0; i < cols; i++) {
+        for (j = 0; j < rows; j++) {
 
-//var hitCount = 0;
+            if (i == 0 && j == 0) {
+                var myShootingNumeration = document.createElement("div")
+                var shootingNumeration = document.createElement("div");
+                shootingGameBoardContainer.appendChild(myShootingNumeration);
+                shootingGameBoardContainer.appendChild(shootingNumeration);
+                for (k = 0; k < 10; k++) {
+                    myShootingText += '<p3>' + k + '</p3>';
+                    shootingText += '<p4>' + String.fromCharCode(97 + k).toUpperCase() + '</p4></br>';
+                }
+                document.getElementById("myShootingNumeration").innerHTML = myShootingText;
+                document.getElementById("shootingNumeration").innerHTML = shootingText;
+            }
+                        
+            var square = document.createElement("div");
+            shootingGameBoardContainer.appendChild(square);
+            
+            square.id = 'e' + j + i;
+            
+            var topPosition = j * squareSize;
+            var leftPosition = i * squareSize;
+            
+            square.style.top = topPosition + 'px';
+            square.style.left = leftPosition + 'px';
 
-//// set event listener for all elements in gameboard, run fireTorpedo function when square is clicked
-//shootingGameBoardContainer.addEventListener("click", fireTorpedo, false);
+            if (shootingGameBoard[j][i] == EMPTY_HIT) {
+                square.style.background = '#fff';
+            } else if (shootingGameBoard[j][i] == SHIP_NOT_HIT) {
+                square.style.background = '#0066ff';
+            } else if (shootingGameBoard[j][i] == SHIP_DESTROYED) {
+                square.style.background = '#CC0000';
+            } else if (shootingGameBoard[j][i] == EMPTY_NOT_HIT) {
+                square.style.background = '#CCCCCC';
+            }
+        }
+    }
+}
 
-//// initial code via http://www.kirupa.com/html5/handling_events_for_many_elements.htm:
-//function fireTorpedo(e) {
-//    // if item clicked (e.target) is not the parent element on which the event listener was set (e.currentTarget)
-//    if (e.target !== e.currentTarget) {
-//        // extract row and column # from the HTML element's id
-//        var row = e.target.id.substring(1, 2);
-//        var col = e.target.id.substring(2, 3);
-//        //alert("Clicked on row " + row + ", col " + col);
+function changeTurn()
+{
+    connection.invoke('IsItMyTurn', mySessionId);
+}
 
-//        // if player clicks a square with no ship, change the color and change square's value
-//        if (shootingGameBoard[row][col] == 0) {
-//            e.target.style.background = '#bbb';
-//            // set this square's value to 3 to indicate that they fired and missed
-//            shootingGameBoard[row][col] = 3;
-//            myGameBoard[row][col] = 3;
+if (shootingGameBoardContainer != null)
+    shootingGameBoardContainer.addEventListener("click", fireTorpedo, false);
 
-//            // if player clicks a square with a ship, change the color and change square's value
-//        } else if (shootingGameBoard[row][col] == 1) {
-//            e.target.style.background = '#0066ff';
-//            // set this square's value to 2 to indicate the ship has been hit
-//            shootingGameBoard[row][col] = 2;
-//            myGameBoard[row][col] = 2;
+function fireTorpedo(e) {
+    if (e.target !== e.currentTarget && myTurn) {
+        var row = e.target.id.substring(1, 2);
+        var col = e.target.id.substring(2, 3);
+        connection.invoke('Move', mySessionId, row, col);
+        e.stopPropagation();
+    }
+}
 
-//            // increment hitCount each time a ship is hit
-//            hitCount++;
-//            // this definitely shouldn't be hard-coded, but here it is anyway. lazy, simple solution:
-//            if (hitCount == 17) {
-//                alert("Wszystkie statki przeciwnika zostaĹ‚y zatopione! Wygrana!");
-//                shootingGameBoardContainer.disabled = true;
-//            }
+function getCurrentBoard() {
+    if (myTurn)
+        return myGameBoard;
+    else
+        return shootingGameBoard;
+}
 
-//            // if player clicks a square that's been previously hit, let them know
-//        } else if (shootingGameBoard[row][col] > 1) {
-//            alert("To pole juĹĽ jest odkryte");
-//        }
-//    }
-//    e.stopPropagation();
-//}
+function getContainerPrefix() {
+    if (myTurn)
+        return 'e';
+    else
+        return 's';
+}
+
+function checkFire(value, row, col) {
+    getCurrentBoard()[row][col] = value;
+    var color;
+    if (value === EMPTY_HIT) {
+        color = '#fff';
+    } else if (value === SHIP_DESTROYED) {
+        color = '#CC0000';
+    }
+    document.getElementById(getContainerPrefix() + row + col).style.background = color;
+}

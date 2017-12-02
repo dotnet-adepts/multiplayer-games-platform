@@ -5,11 +5,14 @@ namespace GameApplication.Models.Games.Battleship
     public class BattleshipPlayer : Player
     {
         public Board Board { get; set; }
+
+        public Board OpponentBoard { get; set; }
         public bool Ready { get; set; }
 
         public BattleshipPlayer(ClaimsPrincipal contextUser) : base(contextUser)
         {
             Board = new Board();
+            OpponentBoard = new Board();
             Ready = false;
         }
 
@@ -30,7 +33,7 @@ namespace GameApplication.Models.Games.Battleship
 
         public void ChangeTurn()
         {
-            Ready = Ready ? false : true;
+            Ready = !Ready;
         }
     }
 }

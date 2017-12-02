@@ -43,7 +43,6 @@ namespace GameApplication.Hubs
             }
         }
 
-
         public async Task StartGame(long lobbyId, string gameName)
         {
             var loggedPlayer = GetLoggedPlayer();
@@ -57,7 +56,6 @@ namespace GameApplication.Hubs
             _gameSessionService.AddSession(gameName, gameSession);
             await Clients.Group(lobbyId.ToString()).InvokeAsync("startGame", gameSession.GetJoinUrl());
         }
-
 
         public override Task OnDisconnectedAsync(Exception exception)
         {

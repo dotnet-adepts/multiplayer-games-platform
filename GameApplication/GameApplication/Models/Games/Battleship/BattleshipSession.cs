@@ -38,15 +38,25 @@ namespace GameApplication.Models.Games.Battleship
 
         public Board GetPlayerBoard(BattleshipPlayer player)
         {
-            if (player == PlayerOne)
-                return PlayerOne.Board;
-            else
-                return PlayerTwo.Board;
+            return GetCurrentPlayer(player).Board;
+        }
+
+        public Board GetOpponentBoard(BattleshipPlayer player)
+        {
+            return GetCurrentPlayer(player).OpponentBoard;
         }
 
         public BattleshipPlayer GetCurrentPlayer(BattleshipPlayer player)
         {
             if (PlayerOne == player)
+                return PlayerOne;
+            else
+                return PlayerTwo;
+        }
+
+        public BattleshipPlayer GetOppositePlayer(BattleshipPlayer player)
+        {
+            if (PlayerOne != player)
                 return PlayerOne;
             else
                 return PlayerTwo;
@@ -80,7 +90,8 @@ namespace GameApplication.Models.Games.Battleship
 
         public BattleshipMoveStatus Move(BattleshipPlayer player, int x, int y)
         {
-            var status = GetCurrentPlayer(player).Board.Cannonry(x, y);
+            var opponentBoard = GetCurrentPlayer(player).OpponentBoard;
+            var status = GetOppositePlayer(player).Board.Cannonry(opponentBoard, x, y);
             switch (status)
             {
                 case BattleshipMoveStatus.ShipDown:
