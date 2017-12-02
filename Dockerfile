@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore-build:2.0.0 AS build
+FROM microsoft/aspnetcore-build:2.0.0
 
 WORKDIR /code
 
@@ -11,7 +11,7 @@ RUN dotnet publish --output /output --configuration Release
 
 FROM microsoft/aspnetcore:2.0.0
 
-COPY --from=build /output /app
+COPY --from=microsoft/aspnetcore-build:2.0.0 /output /app
 
 WORKDIR /app
 
