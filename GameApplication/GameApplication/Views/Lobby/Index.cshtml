@@ -4,40 +4,74 @@
     ViewData["Title"] = "Lobby";
 }
 
-<h2>@ViewData["gameName"] - Lobby</h2>
+<script>
+    $(document).ready(function () {
+        updateLobbies('@ViewData["gameName"]');
+    });
 
-@Html.ActionLink("Nowa gra", "create", new { gameName = ViewData["gameName"] }, null)
-@if (Model.Count() == 0)
-{
-    <p>Nikt aktualnie nie czeka na przeciwnika - stwórz nową poczekalnie i zaproś znajomych</p>
-}
-else
-{
-    <table class="table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Gospodarz</th>
-            <th>Ilość oczekujących graczy</th>
-            <th>Akcja</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var lobby in Model)
-        {
-            <tr>
-                <td>@lobby.Id</td>
-                <td>@lobby.Owner.GetName()</td>
-                <td>@lobby.GetNumberOfConnectedPlayers()</td>
-                <td>@Html.ActionLink("Dołącz", "Join", new {gameName = ViewData["gameName"], lobbyId=lobby.Id }, null)</td>
-            </tr>
+    function updateLobbies(gameName) {
+        $.getJSON("/Lobby/RefreshLobbiesList?gameName=" + gameName, function(lobbies) {
+            convertResposneToLobbyTable(lobbies, gameName);
+        });
+
+        setTimeout(function () {updateLobbies(gameName);}, 2000);
+    }
+
+    function convertResposneToLobbyTable(lobbies, gameName) {
+        var isEmpty = lobbies.length === 0;
+        showEmptyLobbyMsg(isEmpty);
+        showTable(!isEmpty);
+
+        $("#lobbiesTableBody").html('');
+        $.each(lobbies, function (index, lobby) {
+            console.log(JSON.stringify(lobby));
+            $("#lobbiesTableBody").append(buildTableRow(lobby, gameName));
+        });
+    }
+
+    function showEmptyLobbyMsg(show) {
+        if (show) {
+            $("#emptyLobbyMsg").show();
+        } else {
+            $("#emptyLobbyMsg").hide();
         }
-        </tbody>
-    </table>
-}
+    }
 
-<br/><br/>
-<h3 style="color:red">TODO - Lista nie aktualizauje sie w przypadku uzycia przycisku wstecz</h3>
-<h3 style="color:red">TODO - Ukrycie rozpoczetych gier</h3>
+    function showTable(show) {
+        if (show) {
+            $("#lobbiesTable").show();
+        } else {
+            $("#lobbiesTable").hide();
+        }
+    }
 
+    function buildTableRow(lobby, gameName) {
+        var result = '<tr>';
+        result += '<td>' + lobby.id + '</td>';
+        result += '<td>' + lobby.owner + '</td>';
+        result += '<td>' + lobby.numberOfConnectedPlayers + '</td>';
+        result += '<td>' + lobby.numberOfConnectedPlayers + '</td>';
+        result += '<td>' + '<a href="/Lobby/Join?gameName='+ gameName +'&amp;lobbyId='+ lobby.id +'">Dołącz</a>' + '</td>';
+        result += '</tr>';
+        return result;
+    }
 
+</script>
+
+<h2>@ViewData["gameName"] - Lobby</h2>
+@Html.ActionLink("Nowa gra", "create", new {gameName = ViewData["gameName"]}, null)
+
+<p style="display: none" id="emptyLobbyMsg">Nikt aktualnie nie czeka na przeciwnika - stwórz nową poczekalnie i zaproś znajomych</p>
+
+<table style="display: none" class="table" id="lobbiesTable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Gospodarz</th>
+        <th>Ilość oczekujących graczy</th>
+        <th>Akcja</th>
+    </tr>
+    </thead>
+    <tbody id="lobbiesTableBody">
+    </tbody>
+</table>
