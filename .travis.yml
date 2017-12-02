@@ -16,6 +16,6 @@ before_install:
 - docker build -t local/app .
 
 script:
-- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" registry.heroku.com
-- docker tag local/app:latest registry.heroku.com/gameapplication
-- docker push registry.heroku.com/gameapplication
+- docker login --username=_ --password="$DOCKER_PASSWORD" registry.heroku.com
+- docker tag local/app:latest registry.heroku.com/gameapplication/web
+- docker push registry.heroku.com/gameapplication/web
