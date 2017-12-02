@@ -75,7 +75,7 @@ namespace GameApplication
 
             app.UseStaticFiles();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
