@@ -6,6 +6,9 @@ services:
   - docker
 
 before_install:
+- apt-get update
+- apt-get purge lxc-docker*
+- apt-get install docker-engine
 - docker pull microsoft/aspnetcore:2.0.0
 - docker pull microsoft/aspnetcore-build:2.0.0
 - docker build -t local/app .
