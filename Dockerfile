@@ -2,7 +2,7 @@ FROM microsoft/aspnetcore-build:2.0.0
 
 WORKDIR /code
 
-COPY . .
+COPY ./GameApplication .
 
 RUN dotnet restore
 
