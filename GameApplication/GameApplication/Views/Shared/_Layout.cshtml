@@ -37,6 +37,11 @@
     <script src="~/js/hubs/chat.js" asp-append-version="true"></script>
     <script src="~/js/hubs/lobby.js" asp-append-version="true"></script>
     <script src="~/js/custom.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            startChat();
+        });
+    </script>
      @RenderSection("Scripts", required: false)
 </body>
 </html>

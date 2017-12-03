@@ -1,6 +1,4 @@
 ﻿// Code for signalr chat
-
-
 function continueToChat() {
     // Transform form into chat-mode
     $("#spn-nick").text($("#nick").val());
@@ -8,8 +6,7 @@ function continueToChat() {
     $("#chat").show();
 }
 
-function startChat()
-{
+function startChat() {
     // Initialize the connection with singalr hub
     let transportType = signalR.TransportType.WebSockets;
     let http = new signalR.HttpConnection(`http://${document.location.host}/chat`, { transport: transportType });
@@ -45,4 +42,3 @@ function startChat()
         $('#messages').append(li);
     };
 }
-
