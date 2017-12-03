@@ -31,4 +31,6 @@ ENV GOOGLE_ID=$gid
 
 ENV GOOGLE_SECRET=$gs
 
+ENV ASPNETCORE_ENVIRONMENT=Development
+
 CMD ["dotnet", "GameApplication.dll"]
