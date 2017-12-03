@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using GameApplication.Models;
+using System;
 
 namespace GameApplication
 {
@@ -34,13 +35,13 @@ namespace GameApplication
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
-                googleOptions.ClientId = Configuration["Authentication:Google:client_id"];
-                googleOptions.ClientSecret = Configuration["Authentication:Google:client_secret"];
+                googleOptions.ClientId = Environment.GetEnvironmentVariable("GOOGLE_ID").ToString();
+                googleOptions.ClientSecret = Environment.GetEnvironmentVariable("GOOGLE_SECRET").ToString();
             });
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
-                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                facebookOptions.AppId = Environment.GetEnvironmentVariable("FACEBOOK_ID").ToString();
+                facebookOptions.AppSecret = Environment.GetEnvironmentVariable("FACEBOOK_SECRET").ToString();
             });
 
             services.AddTransient<IEmailSender, EmailSender>();
