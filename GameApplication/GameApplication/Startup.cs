@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using GameApplication.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace GameApplication
 {
@@ -45,7 +47,14 @@ namespace GameApplication
 
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddMvc();
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                 .RequireAuthenticatedUser()
+                                 .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+
             services.AddSignalR();
 
             services.AddSingleton<GameService>();

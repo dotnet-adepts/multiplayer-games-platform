@@ -16,7 +16,7 @@ using GameApplication.Services;
 
 namespace GameApplication.Controllers
 {
-    [Authorize]
+
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
