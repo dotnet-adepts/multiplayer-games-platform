@@ -14,6 +14,7 @@ namespace GameApplication.Models.AccountViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Hasło jest wymagane")]
+        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{4,}$", ErrorMessage = "Hasło musi zawierać minimum jedną małą literę, jedną dużą literę, jedną cyfrę oraz jeden znak specjalny")]
         [StringLength(100, ErrorMessage = " {0} musi mieć od {2} do {1} znaków.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Hasło")]
@@ -24,4 +25,6 @@ namespace GameApplication.Models.AccountViewModels
         [Compare("Password", ErrorMessage = "Hasła są różne.")]
         public string ConfirmPassword { get; set; }
     }
+
+
 }
