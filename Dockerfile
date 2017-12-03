@@ -15,6 +15,4 @@ COPY --from=build /output /app
 
 WORKDIR /app
 
-ENTRYPOINT ["dotnet", "GameApplication.dll"]
-
-CMD GameApplication.dll
+CMD dotnet GameApplication.dll
