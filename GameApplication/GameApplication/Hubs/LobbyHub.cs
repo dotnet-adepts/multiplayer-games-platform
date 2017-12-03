@@ -25,14 +25,14 @@ namespace GameApplication.Hubs
 
         public async Task JoinLobby(long lobbyId, string gameName)
         {
+            Context.Connection.Metadata.Add("lobbyId", lobbyId);
+            Context.Connection.Metadata.Add("gameName", gameName);
             var player = GetLoggedPlayer();
-            var groupName = lobbyId.ToString();
             var lobby = _lobbyService.FindByIdAndGameName(lobbyId, gameName);
+            var groupName = GenerateGroupName(lobbyId, gameName);
             try
             {
                 lobby.AddPlayer(player);
-                Context.Connection.Metadata.Add("lobbyId", lobbyId);
-                Context.Connection.Metadata.Add("gameName", gameName);
                 await Groups.AddAsync(Context.ConnectionId, groupName);
                 await Clients.Group(groupName).InvokeAsync("updatePlayers", ConvertPlayersToNames(lobby.ConnectedPlayers));
             }
@@ -42,7 +42,6 @@ namespace GameApplication.Hubs
                 await Clients.Client(Context.ConnectionId).InvokeAsync("updatePlayers", ConvertPlayersToNames(lobby.ConnectedPlayers));
             }
         }
-
 
         public async Task StartGame(long lobbyId, string gameName)
         {
@@ -55,9 +54,9 @@ namespace GameApplication.Hubs
             var players = lobby.ConnectedPlayers;
             var gameSession = lobby.StartGameSession();
             _gameSessionService.AddSession(gameName, gameSession);
-            await Clients.Group(lobbyId.ToString()).InvokeAsync("startGame", gameSession.GetJoinUrl());
+            var groupName = GenerateGroupName(lobbyId, gameName);
+            await Clients.Group(groupName).InvokeAsync("startGame", gameSession.GetJoinUrl());
         }
-
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
@@ -70,7 +69,8 @@ namespace GameApplication.Hubs
             {
                 _lobbyService.Remove(gameName, lobby);
             }
-            Clients.Group(lobbyId.ToString()).InvokeAsync("updatePlayers", ConvertPlayersToNames(lobby.ConnectedPlayers));
+            var groupName = GenerateGroupName(lobbyId, gameName);
+            Clients.Group(groupName).InvokeAsync("updatePlayers", ConvertPlayersToNames(lobby.ConnectedPlayers));
             return base.OnDisconnectedAsync(exception);
         }
 
@@ -88,6 +88,11 @@ namespace GameApplication.Hubs
                 list.Add(player.GetName());
             }
             return list;
+        }
+
+        private string GenerateGroupName(long lobbyId, string gameName)
+        {
+            return gameName + '-' + lobbyId;
         }
     }
 }

@@ -17,8 +17,6 @@ namespace GameApplication
     {
         public Startup(IConfiguration configuration)
         {
-
-
             Configuration = configuration;
         }
 
@@ -34,7 +32,6 @@ namespace GameApplication
             // Windows
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -97,6 +94,7 @@ namespace GameApplication
             {
                 routes.MapHub<ChatRoom>("chat");
                 routes.MapHub<LobbyHub>("lobbyHub");
+                routes.MapHub<BattleshipHub>("battleshipHub");
             });
         }
     }
