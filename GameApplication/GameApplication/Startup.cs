@@ -27,11 +27,11 @@ namespace GameApplication
         {
             // Uncomment while using Linux <3
             // MS SqlServer throws NotSupported on Linux platform, so I temporarily changed it to Sqlite
-            // services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=linux_dev.db"));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=linux_dev.db"));
 
             // Windows
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                .AddEntityFrameworkStores<ApplicationDbContext>()
