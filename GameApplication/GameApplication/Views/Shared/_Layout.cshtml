@@ -5,18 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GameApplication</title>
 
-    <!-- Stylesheets -->
-        <!-- CDN resources -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <!-- Theme color -->
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-deep_purple.min.css" /> 
+    <environment>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
+        <link rel="stylesheet" href="~/css/material_design_template.css">
+        <link rel="stylesheet" href="~/css/custom.css">
+    </environment>
+    <!-- Development specific scripts -->
+    <environment>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+ 
+        <!-- Regular SignalR -->
+        <script src="~/lib/signalr-client/dist/browser/signalr-client-1.0.0-alpha2-final.js"></script>
+        <script src="~/js/hubs/chat.js" asp-append-version="true"></script>
+        <script src="~/js/hubs/lobby.js" asp-append-version="true"></script>
+        <script src="~/js/hubs/games/battleship.js" asp-append-version="true"></script>
+    </environment>
 
-        <!-- Local resources -->
-    <link rel="stylesheet" href="~/css/material_design_template.css">
-    <link rel="stylesheet" href="~/css/custom.css">
-    <!-- Global JavaScript -->
-    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+
 </head>
 <body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -29,14 +40,7 @@
             </div>
         </main>
     </div>
-
-    <!-- JavaScript -->
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <script src="~/lib/signalr-client/dist/browser/signalr-client-1.0.0-alpha2-final.js"></script>
-    <script src="~/js/hubs/chat.js" asp-append-version="true"></script>
-    <script src="~/js/hubs/games/battleship.js" asp-append-version="true"></script>
-    <script src="~/js/hubs/lobby.js" asp-append-version="true"></script>
+    
     <script src="~/js/custom.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
