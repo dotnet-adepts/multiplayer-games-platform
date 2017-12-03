@@ -16,7 +16,7 @@ before_install:
 - docker build -t local/app --build-arg fid="$FACEBOOK_ID" --build-arg fs="$FACEBOOK_SECRET" --build-arg gid="$GOOGLE_ID" --build-arg gs="$GOOGLE_SECRET" .
 
 script:
-- if [ "$TRAVIS_BRANCH" == "feature/deploy-from-develop" ]; then
+- if [ "$TRAVIS_BRANCH" == "develop" ]; then
   docker login --username=_ --password="$DOCKER_PASSWORD" registry.heroku.com;
   docker tag local/app:latest registry.heroku.com/pggameapplication/web;
   docker push registry.heroku.com/pggameapplication/web;
