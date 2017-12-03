@@ -13,7 +13,7 @@ addons:
 before_install:
 - docker pull microsoft/aspnetcore:2.0.0
 - docker pull microsoft/aspnetcore-build:2.0.0
-- docker build -t local/app .
+- cat Dockerfile | envsubst | docker build -t local/app .
 
 script:
 - docker login --username=_ --password="$DOCKER_PASSWORD" registry.heroku.com
