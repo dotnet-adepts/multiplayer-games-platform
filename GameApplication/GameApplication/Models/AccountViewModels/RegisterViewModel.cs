@@ -20,9 +20,10 @@ namespace GameApplication.Models.AccountViewModels
         [Display(Name = "Hasło")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Powtórzenie hasła jest wymagane")]
         [DataType(DataType.Password)]
         [Display(Name = "Powtórz hasło")]
-        [Compare("Password", ErrorMessage = "Hasła są różne.")]
+        [Compare("Password", ErrorMessage = "Hasła są różne")]
         public string ConfirmPassword { get; set; }
     }
 

@@ -23,7 +23,7 @@ namespace GameApplication.Models.ManageViewModels
         [Required(ErrorMessage = "Powtórzenie hasła jest wymagane")]
         [DataType(DataType.Password)]
         [Display(Name = "Powtórz hasło")]
-        [Compare("NewPassword", ErrorMessage = "Podane hasła są różne")]
+        [Compare("NewPassword", ErrorMessage = "Hasła są różne")]
         public string ConfirmPassword { get; set; }
 
         public string StatusMessage { get; set; }
