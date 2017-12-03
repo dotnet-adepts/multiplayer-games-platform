@@ -17,4 +17,4 @@ WORKDIR /app
 
 ENTRYPOINT ["dotnet", "GameApplication.dll"]
 
-CMD ["dotnet", "GameApplication.dll"]
+CMD []
