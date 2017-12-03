@@ -11,16 +11,17 @@ namespace GameApplication.Models.Games
     public class Game
     {
         public string Name { get; set; }
-        public string Desription {get; set;}
+        public string Description {get; set;}
+        public string ThumbnailImagePath {get; set;}
         public int MinNumberOfPlayers { get; set; }
         public int MaxNumberOfPlayers { get; set; }
         public string Category { get; set; }
         public IGameSessionFactory GameSessionFactory;
 
-        public Game(string name, string desription, int minNumberOfPlayers, int maxNumberOfPlayers, string category, IGameSessionFactory gameSessionFactory)
+        public Game(string name, string description, int minNumberOfPlayers, int maxNumberOfPlayers, string category, IGameSessionFactory gameSessionFactory)
         {
             Name = name;
-            Desription = desription;
+            Description = description;
             MinNumberOfPlayers = minNumberOfPlayers;
             MaxNumberOfPlayers = maxNumberOfPlayers;
             Category = category;
