@@ -57,7 +57,6 @@ namespace GameApplicationTests
 
             //Assert
             Assert.NotNull(receivedLobby);
-            Assert.Equal(lobby.Game.Category, receivedLobby.Game.Category);
             Assert.Equal(lobby.Game.Name, receivedLobby.Game.Name);
             Assert.Equal(lobby.Id + 1, receivedLobby.Id);
 
