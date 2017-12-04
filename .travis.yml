@@ -15,8 +15,8 @@ install:
 - dotnet restore ./GameApplication
 
 script:
-- dotnet build
-- dotnet test GameApplicationTests/GameApplicationTests.csproj
+- dotnet build ./GameApplication
+- dotnet test ./GameApplication/GameApplicationTests/GameApplicationTests.csproj
 
 after_success:
 - docker pull microsoft/aspnetcore:2.0.0
