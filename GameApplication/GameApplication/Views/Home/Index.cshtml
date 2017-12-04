@@ -1,35 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<script>
-    $(document).ready(function () {
-        startChat();
-    });
-</script>
-
-<!-- TODO move to a separate partial -->
-<!-- Chatroom snippet (signalR sockets) -->
-<h2>SignalR sockets by miczi</h2>
-<div id="entrance">
-    <label for="nick">Choose your guest nick</label>
-    <input type="text" id="nick" />
-    <button onclick="continueToChat()">Accept</button>
-</div>
- 
-<div id="chat" style="display: none">
-    <h3 id="spn-nick"></h3>
-    <form id="frm-send-message" action="#">
-        <label for="message">Message:</label>
-        <input type="text" id="message" />
-        <input type="submit" id="send" value="Send" class="send" />
-    </form>
-    <div class="clear">
-    </div>
-    <ul id="messages"></ul>
-</div>
-
-
+﻿
 <!-- TODO remove auto-generated project template and replace with Material Design (getmdl.io/templates dashboard)
 
 <!-- <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
