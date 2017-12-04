@@ -137,7 +137,7 @@ namespace GameApplication.Controllers
 
             await _signInManager.SignInAsync(user, isPersistent: false);
             _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Zmieniłeś hasło.";
+            StatusMessage = "Hasło zostało pomyślnie zmienione";
 
             return RedirectToAction(nameof(ChangePassword));
         }

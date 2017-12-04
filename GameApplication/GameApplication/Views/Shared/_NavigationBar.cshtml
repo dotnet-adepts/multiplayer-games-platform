@@ -1,0 +1,28 @@
+<div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+    
+        @await Html.PartialAsync("_LoginPartial")
+
+    <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+        <!-- Games list link -->
+        <a asp-controller="Games" asp-action="Index" class="mdl-navigation__link">
+            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>
+            Lista gier
+        </a>
+
+        <!-- General chat link -->
+        <a href='@Url.Action("Index", "GeneralChat")' class="mdl-navigation__link">
+            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>
+            Czat generalny
+        </a>
+
+        <div class="mdl-layout-spacer"></div>
+
+        <!-- TODO Assign link to help section -->
+        <a class="mdl-navigation__link" href="">
+            <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i>
+            <span class="visuallyhidden">
+                Help
+            </span>
+        </a>
+    </nav>
+</div>

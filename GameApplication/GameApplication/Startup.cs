@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Identity;
 using GameApplication.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using System;
+
 
 namespace GameApplication
 {
@@ -27,8 +29,11 @@ namespace GameApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // Windows SQL server
+            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // Linux <3
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=linux_dev.db"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -36,13 +41,13 @@ namespace GameApplication
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
-                googleOptions.ClientId = Configuration["Authentication:Google:client_id"];
-                googleOptions.ClientSecret = Configuration["Authentication:Google:client_secret"];
+                googleOptions.ClientId = Environment.GetEnvironmentVariable("GOOGLE_ID").ToString();
+                googleOptions.ClientSecret = Environment.GetEnvironmentVariable("GOOGLE_SECRET").ToString();
             });
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
-                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                facebookOptions.AppId = Environment.GetEnvironmentVariable("FACEBOOK_ID").ToString();
+                facebookOptions.AppSecret = Environment.GetEnvironmentVariable("FACEBOOK_SECRET").ToString();
             });
 
             services.AddTransient<IEmailSender, EmailSender>();
@@ -88,6 +93,10 @@ namespace GameApplication
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Games}/{action=Index}/{id?}");
+                
+                routes.MapRoute(
+                    name: "GeneralChat",
+                    template: "{controller=GeneralChat}/{action=Index}");
             });
 
             app.UseSignalR(routes =>

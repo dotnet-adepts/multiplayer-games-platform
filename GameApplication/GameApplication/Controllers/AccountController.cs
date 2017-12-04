@@ -74,7 +74,7 @@ namespace GameApplication.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Nie udana próba logowania.");
+                    ModelState.AddModelError(string.Empty, "Nieudana próba logowania.");
                     return View(model);
                 }
             }
@@ -133,7 +133,7 @@ namespace GameApplication.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(GamesController.Index), "Games");
         }
 
         [HttpPost]
@@ -221,7 +221,7 @@ namespace GameApplication.Controllers
         {
             if (userId == null || code == null)
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(GamesController.Index), "Games");
             }
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
@@ -256,7 +256,7 @@ namespace GameApplication.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(GamesController.Index), "Games");
             }
         }
 
