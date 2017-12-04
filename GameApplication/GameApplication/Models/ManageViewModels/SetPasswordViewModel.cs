@@ -8,15 +8,16 @@ namespace GameApplication.Models.ManageViewModels
 {
     public class SetPasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Nowe hasło jest wymagane")]
         [StringLength(100, ErrorMessage = "{0} musi mieć od {2} do {1} znaków.", MinimumLength = 6)]
+        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{4,}$", ErrorMessage = "Hasło musi zawierać minimum jedną małą literę, jedną dużą literę, jedną cyfrę oraz jeden znak specjalny")]
         [DataType(DataType.Password)]
         [Display(Name = "Nowe hasło")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Potwierdz hasło")]
-        [Compare("NewPassword", ErrorMessage = "Hasła są różne.")]
+        [Compare("NewPassword", ErrorMessage = "Hasła są różne")]
         public string ConfirmPassword { get; set; }
 
         public string StatusMessage { get; set; }
