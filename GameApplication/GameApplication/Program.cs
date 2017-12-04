@@ -29,6 +29,7 @@ namespace GameApplication
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls("http://0.0.0.0:" + Environment.GetEnvironmentVariable("PORT").ToString())
                 .Build();
     }
 }

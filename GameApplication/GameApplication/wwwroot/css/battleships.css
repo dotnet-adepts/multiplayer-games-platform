@@ -17,11 +17,66 @@ p, input {
     margin-left: 30px;
 }
 
+
+.rules {
+    margin-left: 350px;
+    position: absolute;
+}
+
+.rules p {
+    font-size: 1.3em;
+    margin-top: 0.8em;
+}
+
+#checkBoard {
+    margin-left: 30px;
+}
+
+#myBoard1 {
+    position: absolute;
+}
+
+#legendElement1 {
+    height: 30px;
+    width: 30px;
+    background-color: #0066ff;
+    margin-right: 100px;
+    display: inline-block;
+}
+
+#legendElement2 {
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    margin-right: 100px;
+    display: inline-block;
+}
+
+#legendElement3 {
+    height: 30px;
+    width: 30px;
+    background-color: red;
+    display: inline-block;
+}
+
+h6 {
+    margin-left:40px;
+}
+
 button {
     font-size: 1.1em;
     line-height: 1.4em;
     color: #333;
 }
+
+p1 {
+    font-size: 1.4em;
+    margin-left: 30px;
+    display:block;
+    position: absolute;
+    margin-top:3px;
+}
+
 
 p2 {
     font-size: 1em;
@@ -37,6 +92,7 @@ p3 {
 p4 {
     font-size: 1.3em;
     color: #0066ff;
+    line-height: 24px;
 }
 
 h5 {
@@ -49,7 +105,7 @@ h5 {
 
 br {
     margin-bottom: 4px;
-    line-height: 24px;
+    line-height: 26px;
 }
 
 #numeration {
@@ -83,7 +139,7 @@ br {
     background-color: lightblue;
     margin: 10px 10px 10px 30px;
     width: 770px;
-    height: 400px;
+    height: 410px;
 }
 
 #myGameBoard {
@@ -133,18 +189,3 @@ br {
     display: inline-block;
 }
 
-
-a.button {
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
-    text-decoration: none;
-    color: initial;
-    padding-left: 8px;
-    font-size: 1.2em;
-    line-height: 1.4em;
-    color: #333;
-    margin-top: 0.4em;
-    display: block;
-    width: 70px;
-}
