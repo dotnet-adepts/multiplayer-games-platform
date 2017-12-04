@@ -3,9 +3,6 @@
     var http = new signalR.HttpConnection(hub, { transport: signalR.TransportType.WebSockets });
     var connection = new signalR.HubConnection(http);
 
-    connection.start()
-        .then(() => connection.invoke('JoinGame', sessionId)); //wywoływane w trakcie tworzenia połączenia
-
     connection.on('updateExampleValueInView', //obsługa wywołania serwer -> klient
         (newValue) => {
             console.log('New value ' + newValue);
@@ -69,9 +66,8 @@
         connection.invoke('SetBoard', sessionId, startGameBoard);
     });
 
-    $("#updateExampleButton").click(function () {
-        connection.invoke('UpdateExample', sessionId); // wywołanie klient -> serwer
-    });
+    connection.start()
+        .then(() => connection.invoke('JoinGame', sessionId)); //wywoływane w trakcie tworzenia połączenia
 }
 
 // set grid rows and columns and the size of each square
@@ -167,6 +163,3 @@ function placeShip(e) {
     }
         e.stopPropagation();    
 }
-
-
-
