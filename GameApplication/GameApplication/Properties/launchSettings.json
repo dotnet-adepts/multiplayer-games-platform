@@ -11,9 +11,10 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-	  "launchUrl": "https://localhost:44386/",
+      "launchUrl": "https://localhost:44386/",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "PORT": "3332"
       }
     },
     "GameApplication": {
