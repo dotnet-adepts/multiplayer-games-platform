@@ -54,6 +54,10 @@
     connection.on('gameOver',
         (point) => {
             checkFire(SHIP_DESTROYED, point[0], point[1]);
+            setTimeout(
+                function () {
+                    finishGame()
+                }, 500);
             //GAAAAAME OOOVER check whose turn it is  :D
         }
     );
@@ -235,3 +239,14 @@ function checkFire(value, row, col) {
     }
     document.getElementById(getContainerPrefix() + row + col).style.background = color;
 }
+
+function finishGame() {
+    if (myTurn === true) {
+        alert("Koniec gry! Wygrałeś, gratulacje!");
+    }
+    else {
+        alert("Koniec gry! Przegrałeś.");
+    }
+    window.location.replace("/");
+}
+
