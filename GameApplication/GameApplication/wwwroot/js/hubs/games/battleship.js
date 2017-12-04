@@ -3,11 +3,6 @@
     http = new signalR.HttpConnection(hub, { transport: signalR.TransportType.WebSockets });
     connection = new signalR.HubConnection(http);
     mySessionId = sessionId;
-    connection.start()
-        .then(() => connection.invoke('JoinGame', sessionId))
-        .then(() => connection.invoke('GetMyBoard', sessionId))
-        .then(() => connection.invoke('GetOpponentBoard', sessionId))
-        .then(() => connection.invoke('IsItMyTurn', sessionId)); //wywoływane w trakcie tworzenia połączenia
 
     connection.on('updateExampleValueInView', //obsługa wywołania serwer -> klient
         (newValue) => {
@@ -67,9 +62,11 @@
         connection.invoke('SetBoard', sessionId, startGameBoard);
     });
 
-    $("#updateExampleButton").click(function () {
-        connection.invoke('UpdateExample', sessionId); // wywołanie klient -> serwer
-    });
+    connection.start()
+        .then(() => connection.invoke('JoinGame', sessionId))
+        .then(() => connection.invoke('GetMyBoard', sessionId))
+        .then(() => connection.invoke('GetOpponentBoard', sessionId))
+        .then(() => connection.invoke('IsItMyTurn', sessionId)); //wywoływane w trakcie tworzenia połączenia
 }
 
 var rows = 10;
