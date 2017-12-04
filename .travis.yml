@@ -1,6 +1,7 @@
 sudo: required
 
 language: csharp
+dotnet: 2.0.0
 
 services:
   - docker
@@ -9,14 +10,19 @@ addons:
   apt:
     packages:
       - docker-ce
-
-before_install:
-- docker pull microsoft/aspnetcore:2.0.0
-- docker pull microsoft/aspnetcore-build:2.0.0
-- docker build -t local/app --build-arg fid="$FACEBOOK_ID" --build-arg fs="$FACEBOOK_SECRET" --build-arg gid="$GOOGLE_ID" --build-arg gs="$GOOGLE_SECRET" .
+      
+install:
+- dotnet restore ./GameApplication
 
 script:
+- dotnet build ./GameApplication
+- dotnet test ./GameApplication/GameApplicationTests/GameApplicationTests.csproj
+
+after_success:
 - if [ "$TRAVIS_BRANCH" == "develop" ]; then
+  docker pull microsoft/aspnetcore:2.0.0
+  docker pull microsoft/aspnetcore-build:2.0.0
+  docker build -t local/app --build-arg fid="$FACEBOOK_ID" --build-arg fs="$FACEBOOK_SECRET" --build-arg gid="$GOOGLE_ID" --build-arg gs="$GOOGLE_SECRET" .
   docker login --username=_ --password="$DOCKER_PASSWORD" registry.heroku.com;
   docker tag local/app:latest registry.heroku.com/pggameapplication/web;
   docker push registry.heroku.com/pggameapplication/web;
