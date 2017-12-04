@@ -44,11 +44,6 @@ namespace GameApplication
                 googleOptions.ClientId = Environment.GetEnvironmentVariable("GOOGLE_ID").ToString();
                 googleOptions.ClientSecret = Environment.GetEnvironmentVariable("GOOGLE_SECRET").ToString();
             });
-            services.AddAuthentication().AddFacebook(facebookOptions =>
-            {
-                facebookOptions.AppId = Environment.GetEnvironmentVariable("FACEBOOK_ID").ToString();
-                facebookOptions.AppSecret = Environment.GetEnvironmentVariable("FACEBOOK_SECRET").ToString();
-            });
 
             services.AddTransient<IEmailSender, EmailSender>();
 
