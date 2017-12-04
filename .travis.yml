@@ -12,7 +12,7 @@ addons:
       - docker-ce
       
 install:
-- dotnet restore
+- dotnet restore ./GameApplication
 
 script:
 - dotnet build
