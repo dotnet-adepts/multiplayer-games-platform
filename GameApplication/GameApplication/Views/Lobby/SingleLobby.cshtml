@@ -2,29 +2,8 @@
 @model GameApplication.Models.Games.Lobby
 
 @{
-    ViewData["Title"] = "Lobby";
+    ViewData["Title"] = "Lobby #" + @Model.Id;
 }
-
-<style>
-    .alert {
-        padding: 20px;
-        background-color: #ff9800;
-        color: white;
-    }
-
-    .closebtn {
-        margin-left: 15px;
-        color: white;
-        font-weight: bold;
-        float: right;
-        font-size: 22px;
-        line-height: 20px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .closebtn:hover { color: black; }
-</style>
 
 <script>
     $(document).ready(function() {
@@ -32,23 +11,33 @@
     });
 </script>
 
+<div class="demo-options mdl-card mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+        <section style="color: grey">
+            <!-- Show alert box if no lobbies created -->
+            <div id="fullLobby" class="alertbox" style="display: none">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <strong>Gra: @Model.Game.Name</strong> Lobby jest pełne - nie możesz do niego dołączyć
+            </div>
+            <div id="successLobby" class="alertbox success">
+                <strong>Gra:</strong> @Model.Game.Name
+            </div>
+            <!-- Two Line List with secondary info and action -->
+            <h4>Gospodarz: @Model.Owner.GetName()</h4>
+            <p><strong>Wymagana liczba graczy:</strong> @Model.Game.MinNumberOfPlayers</p>
+            <p><strong>Maksymalna liczba graczy:</strong> @Model.Game.MaxNumberOfPlayers <br/>
+            <ul id="connectedPlayers" class="demo-list-two mdl-list">
+            </ul>
 
-<h2>Looby id: @Model.Id</h2>
+            <div class="form-group">
+                @if ((string) ViewData["loggedUser"] == Model.Owner.GetName()){
+                    <!-- Start the game -->
+                    <button id="startGame" style="display: none" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                        Rozpocznij grę
+                    </button>
+                }
+            </div>
 
-<div id="fullLobby" class="alert" style="display: none">
-    Lobby jest pełne - nie możesz dołączyć
+        </section>
+    </div>
 </div>
-
-<hr/>
-<b>Gra:</b> @Model.Game.Name <br/>
-<b>Minimalna ilość graczy:</b> @Model.Game.MinNumberOfPlayers <br/>
-<b>Maksymalna liczba graczy:</b> @Model.Game.MaxNumberOfPlayers <br/>
-<b>Gospodarz:</b> @Model.Owner.GetName() <br/>
-<b>Liczba połączonych graczy:</b> <span id="numberOfPlayers">@Model.GetNumberOfConnectedPlayers() </span> <br/>
-<ul id="connectedPlayers"></ul>
-
-
-@if ((string) ViewData["loggedUser"] == Model.Owner.GetName())
-{
-    <button id="startGame" style="display: none">Roczpocznij gre</button>
-}

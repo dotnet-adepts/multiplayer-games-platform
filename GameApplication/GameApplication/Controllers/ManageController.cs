@@ -131,6 +131,13 @@ namespace GameApplication.Controllers
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
             if (!changePasswordResult.Succeeded)
             {
+                foreach (var error in changePasswordResult.Errors)
+                {
+                    if (error.Code == "PasswordMismatch")
+                    {
+                        error.Description = "Podano złe hasło!";
+                    }
+                }
                 AddErrors(changePasswordResult);
                 return View(model);
             }

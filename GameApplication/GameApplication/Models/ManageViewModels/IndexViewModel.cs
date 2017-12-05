@@ -14,7 +14,7 @@ namespace GameApplication.Models.ManageViewModels
         public bool IsEmailConfirmed { get; set; }
 
         [Required(ErrorMessage = "Adres e-mail jest wymagany")]
-        [EmailAddress(ErrorMessage = "Podano nie poprawy adres e-mail")]
+        [EmailAddress(ErrorMessage = "Podano niepoprawy adres e-mail")]
         public string Email { get; set; }
 
         public string StatusMessage { get; set; }

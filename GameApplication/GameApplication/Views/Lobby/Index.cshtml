@@ -1,9 +1,8 @@
 ﻿@model IEnumerable<GameApplication.Models.Games.Lobby>
 
 @{
-    ViewData["Title"] = "Lobby";
+    ViewData["Title"] = @ViewData["gameName"] + " - Lobby";
 }
-
 <script>
     $(document).ready(function () {
         updateLobbies('@ViewData["gameName"]');
@@ -46,32 +45,54 @@
     }
 
     function buildTableRow(lobby, gameName) {
-        var result = '<tr>';
-        result += '<td>' + lobby.id + '</td>';
-        result += '<td>' + lobby.owner + '</td>';
-        result += '<td>' + lobby.numberOfConnectedPlayers + '</td>';
-        result += '<td>' + lobby.numberOfConnectedPlayers + '</td>';
-        result += '<td>' + '<a href="/Lobby/Join?gameName='+ gameName +'&amp;lobbyId='+ lobby.id +'">Dołącz</a>' + '</td>';
-        result += '</tr>';
-        return result;
+        var row = document.createElement("tr");
+        var tableDataId = document.createElement("td")
+        tableDataId.append(lobby.id);
+
+        var tableDataOwner = document.createElement("td");
+        tableDataOwner.append(lobby.owner);
+
+        var tableDataConnectedPlayers = document.createElement("td");
+        tableDataConnectedPlayers.append(lobby.numberOfConnectedPlayers);
+
+        var tableDataJoinButton = document.createElement("td")
+        var joinGameButton = '<a href="/Lobby/Join?gameName='+ gameName +'&amp;lobbyId='+ lobby.id +'">Dołącz</a>'
+        tableDataJoinButton.innerHTML = joinGameButton;
+        
+        row.append(tableDataId);
+        row.append(tableDataOwner);
+        row.append(tableDataConnectedPlayers);
+        row.append(tableDataJoinButton);
+        return row;
     }
 
 </script>
+<div class="demo-options mdl-card mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+        <section style="color: grey">
+            <!-- Show alert box if no lobbies created -->
+            <div id="emptyLobbyMsg" class="alertbox info" style="display: none">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <strong>Informacja!</strong> Nikt aktualnie nie czeka na przeciwnika - stwórz nową poczekalnie i zaproś znajomych
+            </div>
 
-<h2>@ViewData["gameName"] - Lobby</h2>
-@Html.ActionLink("Nowa gra", "create", new {gameName = ViewData["gameName"]}, null)
+            <!-- Create new lobby button -->
+            @Html.ActionLink("Nowe lobby", "create", new {gameName = ViewData["gameName"]}, 
+            new {@class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary",
+            @style = "width: 200px;margin-top:40px"})
 
-<p style="display: none" id="emptyLobbyMsg">Nikt aktualnie nie czeka na przeciwnika - stwórz nową poczekalnie i zaproś znajomych</p>
+            <table style="display: none; margin-top:20px" id="lobbiesTable" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Gospodarz</th>
+                        <th>Liczba oczekujących graczy</th>
+                        <th>TODO</th>
+                    </tr>
+                </thead>
+                <tbody id="lobbiesTableBody"></tbody>
+            </table>
+        </section>
+    </div>
+</div>
 
-<table style="display: none" class="table" id="lobbiesTable">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Gospodarz</th>
-        <th>Ilość oczekujących graczy</th>
-        <th>Akcja</th>
-    </tr>
-    </thead>
-    <tbody id="lobbiesTableBody">
-    </tbody>
-</table>
