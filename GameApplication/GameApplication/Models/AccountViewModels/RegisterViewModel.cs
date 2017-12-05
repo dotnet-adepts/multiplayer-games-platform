@@ -9,7 +9,7 @@ namespace GameApplication.Models.AccountViewModels
     public class RegisterViewModel
     {
         [Required(ErrorMessage = "Adres e-mail jest wymagany")]
-        [EmailAddress(ErrorMessage = "Podano nie poprawy adres e-mail")]
+        [EmailAddress(ErrorMessage = "Podano niepoprawy adres e-mail")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

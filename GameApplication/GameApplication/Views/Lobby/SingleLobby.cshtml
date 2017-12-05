@@ -5,27 +5,6 @@
     ViewData["Title"] = "Lobby #" + @Model.Id;
 }
 
-<style>
-    .alert {
-        padding: 20px;
-        background-color: #ff9800;
-        color: white;
-    }
-
-    .closebtn {
-        margin-left: 15px;
-        color: white;
-        font-weight: bold;
-        float: right;
-        font-size: 22px;
-        line-height: 20px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .closebtn:hover { color: black; }
-</style>
-
 <script>
     $(document).ready(function() {
         JoinLobby(@Model.Id, "@Model.Game.Name", @Model.Game.MinNumberOfPlayers);
@@ -36,11 +15,11 @@
     <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
         <section style="color: grey">
             <!-- Show alert box if no lobbies created -->
-            <div id="fullLobby" class="alert" style="display: none">
+            <div id="fullLobby" class="alertbox" style="display: none">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                 <strong>Gra: @Model.Game.Name</strong> Lobby jest pełne - nie możesz do niego dołączyć
             </div>
-            <div id="successLobby"class="alert success">
+            <div id="successLobby" class="alertbox success">
                 <strong>Gra:</strong> @Model.Game.Name
             </div>
             <!-- Two Line List with secondary info and action -->

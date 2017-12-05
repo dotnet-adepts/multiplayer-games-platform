@@ -9,11 +9,11 @@ namespace GameApplication.Models.AccountViewModels
     public class LoginViewModel
     {
         [Required(ErrorMessage = "Adres e-mail jest wymagany")]
-        [EmailAddress(ErrorMessage = "Podano nie poprawy adres e-mail")]
+        [EmailAddress(ErrorMessage = "Podano niepoprawy adres e-mail")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Hasło jest wymagane")]
-        [DataType(DataType.Password)]
+        [DataType(DataType.Password, ErrorMessage = "Niepoprawne hasło")]
         public string Password { get; set; }
 
         [Display(Name = "Zapamiętać?")]

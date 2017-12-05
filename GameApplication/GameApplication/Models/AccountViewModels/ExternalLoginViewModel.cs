@@ -9,7 +9,7 @@ namespace GameApplication.Models.AccountViewModels
     public class ExternalLoginViewModel
     {
         [Required(ErrorMessage = "Adres e-mail jest wymagany")]
-        [EmailAddress(ErrorMessage = "Podano nie poprawy adres e-mail")]
+        [EmailAddress(ErrorMessage = "Podano niepoprawy adres e-mail")]
         public string Email { get; set; }
     }
 }
