@@ -1,5 +1,4 @@
-﻿
-function JoinLobby(lobbyId, gameName, minNumberOfPlayers) {
+﻿function JoinLobby(lobbyId, gameName, minNumberOfPlayers) {
     var hub = location.protocol + `//${document.location.host}/lobbyHub`;
     var http = new signalR.HttpConnection(hub, { transport: signalR.TransportType.WebSockets });
     var connection = new signalR.HubConnection(http);
@@ -13,10 +12,34 @@ function JoinLobby(lobbyId, gameName, minNumberOfPlayers) {
             //update number of players
             $("#numberOfPlayers").html(players.length);
 
+
+
             //update connected players list
             $("#connectedPlayers").html("");
             for (var i = 0; i < players.length; i++) {
-                $("#connectedPlayers").append('<li>' + players[i] + '</li>');
+                // Prepare list elements
+                var li = document.createElement("li");
+                li.classList.add("mdl-list__item", "mdl-list__item--two-line");
+
+                var personSpan = document.createElement("span");
+                personSpan.classList.add("mdl-list__item-primary-content");
+
+                var glyphIcon = document.createElement("i");
+                glyphIcon.classList.add("material-icons", "mdl-list__item-avatar");
+                if (i == 0) {
+                    glyphIcon.append("stars");
+                } else {
+                    glyphIcon.append('person');
+                }
+
+                var personName = document.createElement("span");
+                personName.append(players[i]);
+
+                personSpan.append(glyphIcon);
+                personSpan.append(personName);
+                li.append(personSpan);
+
+                $("#connectedPlayers").append(li);
             }
 
             //show start game button
@@ -27,12 +50,12 @@ function JoinLobby(lobbyId, gameName, minNumberOfPlayers) {
                     $("#startGame").hide();
                 }
             }
-        }
-    );
+        });
 
     connection.on('handleFullLobby',
         function() {
             $("#fullLobby").show();
+            $("#successLobby").hide();
         }
     );
 
@@ -43,7 +66,7 @@ function JoinLobby(lobbyId, gameName, minNumberOfPlayers) {
     );
 
 
-    $("#startGame").click(function () {
+    $("#startGame").click(function() {
         connection.invoke('StartGame', lobbyId, gameName);
     });
 }

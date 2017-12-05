@@ -45,14 +45,25 @@
     }
 
     function buildTableRow(lobby, gameName) {
-        var result = '<tr>';
-        result += '<td>' + lobby.id + '</td>';
-        result += '<td>' + lobby.owner + '</td>';
-        result += '<td>' + lobby.numberOfConnectedPlayers + '</td>';
-        result += '<td>' + lobby.numberOfConnectedPlayers + '</td>';
-        result += '<td>' + '<a href="/Lobby/Join?gameName='+ gameName +'&amp;lobbyId='+ lobby.id +'">Dołącz</a>' + '</td>';
-        result += '</tr>';
-        return result;
+        var row = document.createElement("tr");
+        var tableDataId = document.createElement("td")
+        tableDataId.append(lobby.id);
+
+        var tableDataOwner = document.createElement("td");
+        tableDataOwner.append(lobby.owner);
+
+        var tableDataConnectedPlayers = document.createElement("td");
+        tableDataConnectedPlayers.append(lobby.numberOfConnectedPlayers);
+
+        var tableDataJoinButton = document.createElement("td")
+        var joinGameButton = '<a href="/Lobby/Join?gameName='+ gameName +'&amp;lobbyId='+ lobby.id +'">Dołącz</a>'
+        tableDataJoinButton.innerHTML = joinGameButton;
+        
+        row.append(tableDataId);
+        row.append(tableDataOwner);
+        row.append(tableDataConnectedPlayers);
+        row.append(tableDataJoinButton);
+        return row;
     }
 
 </script>
@@ -70,17 +81,16 @@
             new {@class = "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary",
             @style = "width: 200px;margin-top:40px"})
 
-            <table style="display: none" class="table" id="lobbiesTable">
+            <table style="display: none; margin-top:20px" id="lobbiesTable" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                 <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Gospodarz</th>
-                    <th>Ilość oczekujących graczy</th>
-                    <th>Akcja</th>
-                </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Gospodarz</th>
+                        <th>Liczba oczekujących graczy</th>
+                        <th>TODO</th>
+                    </tr>
                 </thead>
-                <tbody id="lobbiesTableBody">
-                </tbody>
+                <tbody id="lobbiesTableBody"></tbody>
             </table>
         </section>
     </div>
