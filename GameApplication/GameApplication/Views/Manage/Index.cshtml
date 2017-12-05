@@ -4,36 +4,23 @@
     ViewData.AddActivePage(ManageNavPages.Index);
 }
 
-<h4>@ViewData["Title"]</h4>
 @Html.Partial("_StatusMessage", Model.StatusMessage)
-<div class="row">
-    <div class="col-md-6">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username"></label>
-                <input asp-for="Username" class="form-control" disabled />
+<section style="color: black">
+    <ul class="demo-list-item mdl-list">
+        <!-- Username field -->            
+        <li>
+            <div class="form-group mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label asp-for="Username" class="mdl-textfield__label">Login</label>
+                <input asp-for="Username" class="form-control mdl-textfield__input" type="text" disabled/>
             </div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                @if (Model.IsEmailConfirmed)
-                {
-                    <div class="input-group">
-                        <input asp-for="Email" class="form-control" />
-                        <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
-                    </div>
-                }
-                else
-                {
-                    <input asp-for="Email" class="form-control" />
-                }
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-default">Zapisz</button>
-        </form>
-    </div>
-</div>
+        </li>
 
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}
+        <!-- Email field -->            
+        <li>
+            <div class="form-group mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label asp-for="Email" class="mdl-textfield__label">Email</label>
+                <input asp-for="Email" class="form-control mdl-textfield__input" type="text" disabled/>
+            </div>
+        </li>
+    </ul>
+</section>
