@@ -1,0 +1,26 @@
+﻿@model IndexViewModel
+@{
+    ViewData["Title"] = "Twój profil - tylko do odczytu";
+    ViewData.AddActivePage(ManageNavPages.Index);
+}
+
+@Html.Partial("_StatusMessage", Model.StatusMessage)
+<section style="color: black">
+    <ul class="demo-list-item mdl-list">
+        <!-- Username field -->            
+        <li>
+            <div class="form-group mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label asp-for="Username" class="mdl-textfield__label">Login</label>
+                <input asp-for="Username" class="form-control mdl-textfield__input" type="text" disabled/>
+            </div>
+        </li>
+
+        <!-- Email field -->            
+        <li>
+            <div class="form-group mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label asp-for="Email" class="mdl-textfield__label">Email</label>
+                <input asp-for="Email" class="form-control mdl-textfield__input" type="text" disabled/>
+            </div>
+        </li>
+    </ul>
+</section>

@@ -1,0 +1,40 @@
+﻿/* General Chat message - scrollable list */
+
+.demo-list-item {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.demo-list-two {
+    width: 300px;
+}
+
+.alertbox {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+    width: 100%;
+}
+
+.alertbox.info {
+    background-color: #2196F3;
+}
+
+.alertbox.success {
+    background-color: #4CAF50;
+}
+
+.closebtn {
+    margin-right: 20px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}

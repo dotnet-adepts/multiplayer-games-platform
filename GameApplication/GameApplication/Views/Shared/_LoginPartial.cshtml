@@ -1,0 +1,93 @@
+@using Microsoft.AspNetCore.Identity 
+@using GameApplication.Models 
+@inject SignInManager<ApplicationUser> SignInManager 
+@inject UserManager<ApplicationUser> UserManager
+
+
+@if(SignInManager.IsSignedIn(User)) {
+    <!-- Header containing: user mockup avatar, dropdown list with account actions, like "Show profile details" -->
+    <header class="demo-drawer-header">
+        <!-- Avatar image-->
+        <img src="~/images/user.jpg" class="demo-avatar">
+        <div class="mdl-layout-spacer"></div>
+
+        <!-- Dropdown list -->
+        <div class="demo-avatar-dropdown">
+            <!-- Visible element -->
+            <span>@Html.Partial("_HelloUser")</span>
+            <div class="mdl-layout-spacer"></div>
+
+            <!-- Dropdown arrow -->
+            <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"> 
+                    <i class="material-icons" role="presentation">arrow_drop_down</i> 
+            </button>
+
+            <!-- Hidden list elements. Visible on arrow icon click -->
+            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+                <!-- Show profile button -->
+                <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                        <a href="@Url.Action("Index", "Manage")" title="Manage">
+                            <button style="width: 200px" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                            Twój profil
+                            <i class="material-icons">account_box</i>
+                            </button>
+                        </a>
+                    </span>
+                </li>
+
+                <!-- Change password button -->
+                <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                        <a href="@Url.Action("ChangePassword", "Manage")" title="Manage">
+                            <button style="width: 200px" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                            Zmień hasło
+                            <i class="material-icons">vpn_key</i>
+                            </button>
+                        </a>
+                    </span>
+                </li>
+
+                <!-- Logout button -->
+                <li class="mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
+                            <button style="width: 200px" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                                Wyloguj
+                                <i class="material-icons">exit_to_app</i>
+                            </button>
+                        </form>
+                    </span>
+                </li>
+
+            </ul>
+
+        </div>
+    </header>
+} else {
+    <!-- List of buttons -->
+    <ul class="demo-list-item mdl-list" for="accbtn">
+        <!-- SignIn button as list item-->
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                <a href="@Url.Action("Login", "Account")">
+                    <button style="width: 200px" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                    Zaloguj się
+                    </button>
+                </a>
+            </span>
+        </li>
+
+
+        <!-- SignUp button as list item-->
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                <a href="@Url.Action("Register", "Account")">
+                    <button style="width: 200px" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                    Zarejestruj się
+                    </button>
+                </a>
+            </span>
+        </li>
+    </ul>
+}

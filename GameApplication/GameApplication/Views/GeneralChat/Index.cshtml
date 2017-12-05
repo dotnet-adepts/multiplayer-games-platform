@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "Czat generalny";
+}
+<script src="~/js/hubs/chat.js" asp-append-version="true"></script>
+<!-- Purple container -->
+<div class="demo-options mdl-card mdl-color--deep-purple mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
+    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+
+        <!-- Provide username within chat session-->
+        <div id="entrance">
+            <!-- Choose nick -->
+            <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text" id="nick"/>
+                <label class="mdl-textfield__label" for="nick">Wybierz nick...</label>
+            </div>
+
+            <!-- OK button -->
+            <button onclick="continueToChat()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">OK</button>
+        </div>
+
+        <!-- Message input + Send button + Messages list -->
+        <div id="chat" style="display: none">
+            <!-- Display nickname -->
+            <h3 id="spn-nick"></h3>
+
+            <form id="frm-send-message" action="#">
+            <!-- Message input -->
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" id="message"/>
+                    <label class="mdl-textfield__label" for="message">Treść wiadomości...</label>
+                </div>
+
+            <!-- Send button -->
+                <input type="submit" id="send" value="Wyślij" class="send mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                </input>
+            </form>
+
+            <!-- Messages list -->
+            <ul id="messages" class="demo-list-item mdl-list"></ul>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        startChat();
+    });
+</script>

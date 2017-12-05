@@ -1,0 +1,57 @@
+﻿@model GameApplication.Models.Games.Battleship.BattleshipSession
+
+@{
+    ViewData["Title"] = "Statki";
+}
+
+<script>
+    $(document).ready(function() {
+        StartBattleshipGame(@Model.Id);
+    });
+</script>
+
+<h3>@Model.PlayerOne.GetName() vs @Model.PlayerTwo.GetName()</h3>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Rozstaw swoje statki</title>
+    <link rel="stylesheet" type="text/css" href="~/css/battleships.css">
+</head>
+<body>
+    <div class="mainContainer">
+        <div id="gameboardsContainer" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="grid-container" id="myBoard1">
+                <h5>Twoja plansza</h5>
+                <div id="myNumeration"></div>
+                <div id="numeration"></div>
+                <div id="myGameBoard"></div>
+            </div>
+            <div class="grid-container">
+                <div class="rules">
+                    <p>
+                        Stwórz swoje ustawienie statków!<br />
+                        Ustawienie powinno zawierać:<br />
+                        1x czteropoziomowy<br />
+                        2x trzypoziomowe<br />
+                        3x dwupoziomowe<br />
+                        4x jednopoziomowe<br />
+                        Statki nie mogą się stykać (nawet na rogach)!
+                    </p>
+                    <p id="errorMessage"></p>
+                    <button id="checkBoard">Gotowe</button>
+                    <br/>
+                    <div style="margin-top:5px;">
+                        <p>Legenda:</p>
+                        <div id="legendElement1" style=" margin-left: 30px; height: 30px; width: 30px; background-color: #0066ff; display: inline-block; margin-right:120px;"><h6 style="position: absolute; display:block; margin-left: 35px; margin-top:0px;">- Twój statek</h6></div>
+                        <div id="legendElement2" style="height: 30px; width: 30px; background-color: white; display: inline-block; margin-right:70px; margin-top:-20px;"><h6 style="position: absolute; display:block; margin-left: 35px; margin-top:0px;">- Pudło</h6></div>
+                        <div id="legendElement3" style="height: 30px; width: 30px; background-color: red; display: inline-block; margin-top:-20px;"><h6 style="position: absolute; display:block; margin-left: 35px; margin-top:0px;">- Trafiony</h6></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script type="text/javascript" src="~/js/hubs/games/start.js"></script>
+</body>
+
+

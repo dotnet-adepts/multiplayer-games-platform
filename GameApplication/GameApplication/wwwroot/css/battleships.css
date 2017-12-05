@@ -1,0 +1,191 @@
+﻿body {
+    width: 70%;
+    max-width: 900px;
+}
+
+h1 {
+    font-size: 2.2em;
+    font-family: 'Helvetica', 'Arial', 'Sans-Serif';
+    margin-left: 30px;
+}
+
+p, input {
+    font-size: 1.4em;
+    line-height: 1.4em;
+    color: #333;
+    margin-bottom: 1em;
+    margin-left: 30px;
+}
+
+
+.rules {
+    margin-left: 350px;
+    position: absolute;
+}
+
+.rules p {
+    font-size: 1.3em;
+    margin-top: 0.8em;
+}
+
+#checkBoard {
+    margin-left: 30px;
+}
+
+#myBoard1 {
+    position: absolute;
+}
+
+#legendElement1 {
+    height: 30px;
+    width: 30px;
+    background-color: #0066ff;
+    margin-right: 100px;
+    display: inline-block;
+}
+
+#legendElement2 {
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    margin-right: 100px;
+    display: inline-block;
+}
+
+#legendElement3 {
+    height: 30px;
+    width: 30px;
+    background-color: red;
+    display: inline-block;
+}
+
+h6 {
+    margin-left:40px;
+}
+
+button {
+    font-size: 1.1em;
+    line-height: 1.4em;
+    color: #333;
+}
+
+p1 {
+    font-size: 1.4em;
+    margin-left: 30px;
+    display:block;
+    position: absolute;
+    margin-top:3px;
+}
+
+
+p2 {
+    font-size: 1em;
+    color: cornflowerblue;
+}
+
+p3 {
+    font-size: 1.3em;
+    color: #0066ff;
+    margin-right: 20px;
+}
+
+p4 {
+    font-size: 1.3em;
+    color: #0066ff;
+    line-height: 24px;
+}
+
+h5 {
+    font-size: 1.5em;
+    margin: 15px 0px 0px 0px;
+    text-align: center;
+    color: #0066ff;
+    font-weight: 300;
+}
+
+br {
+    margin-bottom: 4px;
+    line-height: 26px;
+}
+
+#numeration {
+    position: absolute;
+    width: 5%;
+    margin: 45px 0px 0px 20px;
+}
+
+#myNumeration {
+    position: absolute;
+    width: 5%;
+    margin: 15px 0px 10px 50px;
+}
+
+#shootingNumeration {
+    position: absolute;
+    width: 5%;
+    margin: 45px 0px 0px 20px;
+}
+
+
+#myShootingNumeration {
+    position: absolute;
+    width: 5%;
+    margin: 15px 0px 10px 50px;
+}
+
+#gameboardsContainer {
+    border-style: ridge;
+    border-color: aquamarine;
+    background-color: lightblue;
+    margin: 10px 10px 10px 30px;
+    width: 770px;
+    height: 410px;
+}
+
+#myGameBoard {
+    position: relative;
+    margin: 40px auto auto 40px;
+    display: inline-block;
+}
+
+    #myGameBoard div {
+        position: absolute;
+        -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
+        -moz-box-sizing: border-box; /* Firefox 1 - 28 *!*/
+        box-sizing: border-box; /* Safari 5.1+, Chrome 10+, Firefox 29+, Opera 7+, IE 8+, Android 4.0+, iOS any */
+        background: #f6f8f9; /* Old browsers *!*/
+        border: 1px solid #ddd;
+        width: 30px;
+        height: 30px;
+    }
+
+#shootingGameBoard {
+    position: relative;
+    margin: 40px auto auto 40px;
+    display: inline-block;
+}
+
+    #shootingGameBoard div {
+        position: absolute;
+        -webkit-box-sizing: border-box; /* Safari 3.0 - 5.0, Chrome 1 - 9, Android 2.1 - 3.x */
+        -moz-box-sizing: border-box; /* Firefox 1 - 28 */
+        box-sizing: border-box; /* Safari 5.1+, Chrome 10+, Firefox 29+, Opera 7+, IE 8+, Android 4.0+, iOS any */
+        background: #f6f8f9; /* Old browsers */
+        border: 1px solid #ddd;
+        width: 30px;
+        height: 30px;
+    }
+
+.grid-container {
+    width: 370px;
+    height: 400px;
+    display: inline-block;
+}
+
+.startButtons {
+    font-size: 1em;
+    line-height: 1.4em;
+    color: #333;
+    display: inline-block;
+}
+

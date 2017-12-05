@@ -1,0 +1,48 @@
+﻿@model GameApplication.Models.Games.Battleship.BattleshipSession
+
+@{
+    ViewData["Title"] = "Statki";
+}
+
+<script>
+    $(document).ready(function() {
+        StartBattleshipGame(@Model.Id);
+    });
+</script>
+
+<html>
+<head>
+    <title>Statki</title>
+    <link rel="stylesheet" type="text/css" href="~/css/battleships.css">
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Statki</h1>
+    <p>Postaraj się zatopić wszystkie statki przeciwnika!</p>
+    <div class="mainContainer">
+        <div id="gameboardsContainer" style="height:450px!important">
+            <div class="grid-container">
+                <h5>Twoja plansza</h5>
+                <div id="myNumeration"></div>
+                <div id="numeration"></div>
+                <div id="myGameBoard"></div>
+            </div>
+            <div class="grid-container">
+                <h5>Plansza przeciwnika</h5>
+                <div id="myShootingNumeration"></div>
+                <div id="shootingNumeration"></div>
+                <div id="shootingGameBoard"></div>
+            </div>
+            <div style="height:80px;">
+                <p1>Legenda:</p1>
+                <div id="legendElement1" style=" margin-left: 130px; height: 30px; width: 30px; background-color: #0066ff; display: inline-block; margin-right:120px;"><h6 style="position: absolute; display:block; margin-left: 35px; margin-top:0px;">- Twój statek</h6></div>
+                <div id="legendElement2" style="height: 30px; width: 30px; background-color: white; display: inline-block; margin-right:70px; margin-top:-20px;"><h6 style="position: absolute; display:block; margin-left: 35px; margin-top:0px;">- Pudło</h6></div>
+                <div id="legendElement3" style="height: 30px; width: 30px; background-color: red; display: inline-block; margin-top:-20px;"><h6 style="position: absolute; display:block; margin-left: 35px; margin-top:0px;">- Trafiony</h6></div>
+            </div>
+        </div> 
+    </div>
+    <p></p>
+    <script type="text/javascript" src="~/js/hubs/games/battleship.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</body>
+</html>

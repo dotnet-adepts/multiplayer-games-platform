@@ -1,0 +1,43 @@
+﻿@*TODO: refresh using ajax or websocket*@
+@model GameApplication.Models.Games.Lobby
+
+@{
+    ViewData["Title"] = "Lobby #" + @Model.Id;
+}
+
+<script>
+    $(document).ready(function() {
+        JoinLobby(@Model.Id, "@Model.Game.Name", @Model.Game.MinNumberOfPlayers);
+    });
+</script>
+
+<div class="demo-options mdl-card mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+        <section style="color: grey">
+            <!-- Show alert box if no lobbies created -->
+            <div id="fullLobby" class="alertbox" style="display: none">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <strong>Gra: @Model.Game.Name</strong> Lobby jest pełne - nie możesz do niego dołączyć
+            </div>
+            <div id="successLobby" class="alertbox success">
+                <strong>Gra:</strong> @Model.Game.Name
+            </div>
+            <!-- Two Line List with secondary info and action -->
+            <h4>Gospodarz: @Model.Owner.GetName()</h4>
+            <p><strong>Wymagana liczba graczy:</strong> @Model.Game.MinNumberOfPlayers</p>
+            <p><strong>Maksymalna liczba graczy:</strong> @Model.Game.MaxNumberOfPlayers <br/>
+            <ul id="connectedPlayers" class="demo-list-two mdl-list">
+            </ul>
+
+            <div class="form-group">
+                @if ((string) ViewData["loggedUser"] == Model.Owner.GetName()){
+                    <!-- Start the game -->
+                    <button id="startGame" style="display: none" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                        Rozpocznij grę
+                    </button>
+                }
+            </div>
+
+        </section>
+    </div>
+</div>

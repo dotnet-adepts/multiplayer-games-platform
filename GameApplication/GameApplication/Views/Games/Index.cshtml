@@ -1,0 +1,10 @@
+﻿@model IEnumerable<GameApplication.Models.Games.Game>
+
+@{
+    ViewData["Title"] = "Lista gier";
+}
+@foreach (var game in Model)
+{   
+    @* Render a box for each gama available *@
+    @Html.Partial("~/Views/Template/_GameBox.cshtml", game)
+}

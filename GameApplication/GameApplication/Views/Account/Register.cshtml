@@ -1,0 +1,55 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Rejestracja";
+}
+<!-- Box for signin using local account -->
+<div class="demo-options mdl-card mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--6-col-desktop">
+    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+        <section style="color: black">
+            <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                <h4>Stwórz nowe konto</h4>
+                <hr />
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <ul class="demo-list-item mdl-list">
+                    <!-- Email input field -->            
+                    <li>
+                        <div class="form-group mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <label asp-for="Email" class="mdl-textfield__label">Email</label>
+                            <input asp-for="Email" class="form-control mdl-textfield__input" type="text" required>
+                            <span asp-validation-for="Email" class="text-danger mdl-textfield__error"></span>
+                        </div>
+                    </li>
+                    <!-- Password input field -->
+                    <li>
+                        <div class="form-group mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <label asp-for="Password" class="mdl-textfield__label">Hasło</label>
+                            <input asp-for="Password" class="form-control mdl-textfield__input" type="password" required>
+                            <span asp-validation-for="Password" class="text-danger mdl-textfield__error"></span>
+                        </div>
+                    </li>
+
+                    <!-- Repeat password input field -->
+                    <li>
+                        <div class="form-group mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <label asp-for="ConfirmPassword" class="mdl-textfield__label">Potwiedzenie hasła</label>
+                            <input asp-for="ConfirmPassword" class="form-control mdl-textfield__input" type="password" required>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger mdl-textfield__error"></span>
+                        </div>
+                    </li>
+                </ul>
+                <!-- Create new account button -->
+                <div class="form-group">
+                    <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                        <i class="material-icons">create</i>
+                        Stwórz nowe konto
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
